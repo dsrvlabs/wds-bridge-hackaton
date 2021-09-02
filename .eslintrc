@@ -1,4 +1,8 @@
 {
+  "env": {
+    "node": true,
+    "browser": true
+  },
   "extends": [
     "next/core-web-vitals",
     "next",
@@ -12,8 +16,15 @@
   "rules": {
     "no-console": "off",
     "prettier/prettier": "error",
-    "arrow-body-style": "off",
-    "prefer-arrow-callback": "off",
+    "arrow-body-style": [
+      "error",
+      "always"
+    ],
+    "func-style": [
+      "error",
+      "expression"
+    ],
+    "prefer-arrow-callback": "error",
     "react/react-in-jsx-scope": "off",
     "no-unused-expressions": 0,
     "import/extensions": ["off"],
@@ -21,7 +32,8 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "no-nested-ternary": "off",
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "no-nested-ternary": "error",
     "react/jsx-filename-extension": "off",
     "spaced-comment": "off",
     "no-unused-variable": "off",
