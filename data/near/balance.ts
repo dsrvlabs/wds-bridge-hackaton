@@ -6,10 +6,12 @@ export class Near {
     const helperURL = 'https://helper.mainnet.near.org';
     let balanceError: BalanceError;
     if (address.includes(':')) {
-        const helper = `${helperURL}/publicKey/${address}/accounts`;
-        const accountIds = await fetch(helper).then((res) => res.json());
-        address = accountIds[Object.keys(accountIds).length - 1];
-        }
+      const helper = `${helperURL}/publicKey/${address}/accounts`;
+      const accountIds = await fetch(helper).then((res) => {
+        return res.json();
+      });
+      address = accountIds[Object.keys(accountIds).length - 1];
+    }
     if (address) {
       try {
         const response = await fetch(URL, {
@@ -36,10 +38,9 @@ export class Near {
           locked: block.result.locked,
           error: BalanceError.NO_ERROR,
         };
-        return balance
-
+        return balance;
       } catch (error) {
-          balanceError = BalanceError.ADDRESS_ERROR;
+        balanceError = BalanceError.ADDRESS_ERROR;
       }
     } else {
       balanceError = BalanceError.NO_ADDRESS;
