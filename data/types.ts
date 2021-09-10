@@ -27,3 +27,19 @@ export enum BalanceError {
 export interface Stake {
   title: string;
 }
+
+/*
+ Epoch interface
+*/
+
+export interface Epoch {
+  epochStartTime: number;
+  epochEndTime: number;
+  error: EpochError;
+}
+
+export enum EpochError {
+  NO_ERROR = '',
+  TIME_ERROR = 'Epoch time error',
+  NOT_SUPPORTED_CHAIN = 'Not supported chain',
+}
