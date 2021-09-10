@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiResponse } from 'next';
 import { Price, PriceError } from '../../../data/types';
 
@@ -40,14 +41,10 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
         change1y: data.market_data.price_change_percentage_1y_in_currency.usd || null,
         error: PriceError.NO_ERROR,
       };
-
       res.status(200).json({ price });
       break;
     default:
-      price = {
-        error: PriceError.NOT_SUPPORTED_CHAIN,
-      };
-      res.status(200).json({ price });
+      res.status(200).json({ error: PriceError.NOT_SUPPORTED_CHAIN });
       break;
   }
 }
