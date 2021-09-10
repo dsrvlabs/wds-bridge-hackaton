@@ -43,3 +43,23 @@ export enum EpochError {
   TIME_ERROR = 'Epoch time error',
   NOT_SUPPORTED_CHAIN = 'Not supported chain',
 }
+
+/*
+  Price interface
+*/
+
+export interface Price {
+  now?: number;
+  high24h?: number;
+  low24h?: number;
+  change7d?: number;
+  change14d?: number;
+  change30d?: number;
+  change1y?: number;
+  error: PriceError;
+}
+
+export enum PriceError {
+  NO_ERROR = '',
+  NOT_SUPPORTED_CHAIN = 'Not supported chain',
+}
