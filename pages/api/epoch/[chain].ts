@@ -1,5 +1,5 @@
 import type { NextApiResponse } from 'next';
-// import { Solana } from '../../../../data/solana/epoch';
+import { Solana } from '../../../data/solana/epoch';
 import { Near } from '../../../data/near/epoch';
 import { Epoch, EpochError } from '../../../data/types';
 
@@ -10,6 +10,10 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
   switch (chain) {
     case 'near':
       epoch = await Near.getEpoch(chain);
+      res.status(200).json({ epoch });
+      break;
+    case 'solana':
+      epoch = await Solana.getEpoch(chain);
       res.status(200).json({ epoch });
       break;
     default:
