@@ -25,5 +25,16 @@ export enum BalanceError {
 }
 
 export interface Stake {
-  title: string;
+  validator: Account;
+  value: string;
+  status: StakeStatus;
+  error: BalanceError;
+  stakeAccount?: string;
+}
+
+export enum StakeStatus {
+  NOT_DELEGATED = 'Not delegated',
+  DELEGATING = 'Not delegated(activating)',
+  DELEGATED = 'Delegated',
+  UNDELEGATING = 'Delegated(deactivating)',
 }
