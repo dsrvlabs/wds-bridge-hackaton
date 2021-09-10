@@ -8,6 +8,7 @@ import { Balance, BalanceError } from '../types';
 export class Solana {
   static async getBalance(address: string): Promise<Balance> {
     const URL = 'https://api.devnet.solana.com';
+    let balanceError: BalanceError;
     if (address) {
       try {
         const response = await fetch(URL, {
@@ -33,22 +34,17 @@ export class Solana {
         };
         return balance;
       } catch (error) {
-        const balance: Balance = {
-          decimal: 9,
-          total: '',
-          locked: '',
-          error: BalanceError.ADDRESS_ERROR,
-        };
-        return balance;
+        balanceError = BalanceError.ADDRESS_ERROR;
       }
     } else {
-      const balance: Balance = {
-        decimal: 9,
-        total: '',
-        locked: '',
-        error: BalanceError.NO_ADDRESS,
-      };
-      return balance;
+      balanceError = BalanceError.NO_ADDRESS;
     }
+    const balance: Balance = {
+      decimal: 9,
+      total: '',
+      locked: '',
+      error: balanceError,
+    };
+    return balance;
   }
 }
