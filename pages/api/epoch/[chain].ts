@@ -1,28 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiResponse } from 'next';
-import { Solana } from '../../../data/solana/epoch';
-import { Near } from '../../../data/near/epoch';
-import { Epoch, EpochError } from '../../../data/types';
+import { getEpoch as Solana } from '@/data/solana/epoch';
+import { getEpoch as Near } from '@/data/near/epoch';
+import { EpochError, ApiResponse } from '@/data/types';
 
 export default async function handler(req: any, res: NextApiResponse): Promise<void> {
   const chain = req.query.chain;
-  let epoch: Epoch;
+  let response: ApiResponse;
 
   switch (chain) {
     case 'near':
-      epoch = await Near.getEpoch(chain);
-      res.status(200).json({ epoch });
+      response = await Near(chain);
+      res.status(200).json(response);
       break;
     case 'solana':
-      epoch = await Solana.getEpoch(chain);
-      res.status(200).json({ epoch });
+      response = await Solana(chain);
+      res.status(200).json(response);
       break;
     default:
-      epoch = {
-        epochStartTime: 0,
-        epochEndTime: 0,
-        error: EpochError.NOT_SUPPORTED_CHAIN,
-      };
-      res.status(200).json({ epoch });
+      res.status(200).json({ error: EpochError.NOT_SUPPORTED_CHAIN });
       break;
   }
 }
