@@ -33,7 +33,6 @@ export interface Stake {
   validator: Account;
   value: string;
   status: StakeStatus;
-  error: BalanceError;
   stakeAccount?: string;
 }
 
