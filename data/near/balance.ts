@@ -32,7 +32,7 @@ export const getBalance = async (address: string): Promise<ApiResponse> => {
       });
       const block = await response.json();
       const balance: ApiResponse = {
-        api: 'balance',
+        api: 'v1/balance/near',
         data: {
           decimal: 24,
           total: block.result.amount,
@@ -48,12 +48,7 @@ export const getBalance = async (address: string): Promise<ApiResponse> => {
     balanceError = BalanceError.NO_ADDRESS;
   }
   const balance: ApiResponse = {
-    api: 'balance',
-    data: {
-      decimal: 9,
-      total: '',
-      locked: '',
-    },
+    api: 'v1/balance/near',
     error: balanceError,
   };
   return balance;

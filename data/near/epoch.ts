@@ -22,7 +22,7 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
       const epochTime = epochProgressTimeStamp / epochProgress; // 이번 에폭 총 시간
       const epochEndTime = Math.round(epochStartTime + epochTime);
       const epoch: ApiResponse = {
-        api: 'epoch',
+        api: 'v1/epoch/near',
         data: {
           epochStartTime: epochStartTime,
           epochEndTime: epochEndTime,
@@ -38,11 +38,7 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
     epochError = EpochError.NO_ERROR;
   }
   const epoch: ApiResponse = {
-    api: 'epoch',
-    data: {
-      epochStartTime: 0,
-      epochEndTime: 0,
-    },
+    api: 'v1/epoch/near',
     error: epochError,
   };
   return epoch;

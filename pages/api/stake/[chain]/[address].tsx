@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiResponse } from 'next';
 import { getStake as Solana } from '@/data/solana/stake';
 import { getStake as Near } from '@/data/near/stake';

@@ -64,7 +64,7 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
       // console.log(blockValidator)
       if (blockValidator.length > 0) {
         stakes = {
-          api: 'stake',
+          api: 'v1/stake/near',
           data: blockValidator.map((item: any) => {
             return {
               validator: {
@@ -88,14 +88,7 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
     balanceError = BalanceError.NO_ADDRESS;
   }
   stakes = {
-    api: 'stake',
-    data: [
-      {
-        validator: { address: '' },
-        value: '',
-        status: StakeStatus.NOT_DELEGATED,
-      },
-    ],
+    api: 'v1/stake/near',
     error: balanceError,
   };
   return stakes;

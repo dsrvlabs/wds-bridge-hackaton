@@ -33,7 +33,7 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
       const epochStartTime = epochEndTime - epochTimeTotal;
       // console.log('Epoch start time (approx.)	- ', epochStartTime);
       const epoch: ApiResponse = {
-        api: 'epoch',
+        api: 'v1/epoch/solana',
         data: {
           epochStartTime: epochStartTime,
           epochEndTime: epochEndTime,
@@ -49,11 +49,7 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
     epochError = EpochError.NO_ERROR;
   }
   const epoch: ApiResponse = {
-    api: 'epoch',
-    data: {
-      epochStartTime: 0,
-      epochEndTime: 0,
-    },
+    api: 'v1/epoch/solana',
     error: epochError,
   };
   return epoch;

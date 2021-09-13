@@ -88,7 +88,7 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
           }
         });
         stakes = {
-          api: 'stake',
+          api: 'v1/stake/solana',
           data: await Promise.all(data),
           error: BalanceError.NO_ERROR,
         };
@@ -103,14 +103,7 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
     balanceError = BalanceError.NO_ADDRESS;
   }
   stakes = {
-    api: 'stake',
-    data: [
-      {
-        validator: { address: '' },
-        value: '',
-        status: StakeStatus.NOT_DELEGATED,
-      },
-    ],
+    api: 'v1/stake/solana',
     error: balanceError,
   };
   return stakes;
