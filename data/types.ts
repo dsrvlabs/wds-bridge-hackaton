@@ -1,6 +1,6 @@
 export interface ApiResponse {
   api: string;
-  data?: Balance | Epoch | Price;
+  data?: Balance | Epoch | Price | Stake[];
   error?: BalanceError | EpochError | PriceError;
 }
 
