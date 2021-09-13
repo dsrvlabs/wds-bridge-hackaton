@@ -1,3 +1,9 @@
+export interface ApiResponse {
+  api: string;
+  data?: Balance | Epoch | Price;
+  error?: BalanceError | EpochError | PriceError;
+}
+
 /*
  Balance interface
 */
@@ -8,7 +14,6 @@ export interface Balance {
   locked: string;
   stake?: Stake[];
   account?: Account;
-  error: BalanceError;
 }
 
 export interface Account {
@@ -35,7 +40,6 @@ export interface Stake {
 export interface Epoch {
   epochStartTime: number;
   epochEndTime: number;
-  error: EpochError;
 }
 
 export enum EpochError {
@@ -56,7 +60,6 @@ export interface Price {
   change14d?: number;
   change30d?: number;
   change1y?: number;
-  error: PriceError;
 }
 
 export enum PriceError {
