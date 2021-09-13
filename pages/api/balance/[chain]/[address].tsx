@@ -1,29 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiResponse } from 'next';
-import { Solana } from '../../../../data/solana/balance';
-import { Near } from '../../../../data/near/balance';
-import { Balance, BalanceError } from '../../../../data/types';
+import { ApiResponse, BalanceError } from '@/data/types';
+import { getBalance as Solana } from '@/data/solana/balance';
+import { getBalance as Near } from '@/data/near/balance';
+
 export default async function handler(req: any, res: NextApiResponse): Promise<void> {
   const address = req.query.address;
   const chain = req.query.chain;
-  let balance: Balance;
+  let response: ApiResponse;
 
   switch (chain) {
     case 'solana':
-      balance = await Solana.getBalance(address);
-      res.status(200).json({ balance });
+      response = await Solana(address);
+      res.status(200).json(response);
       break;
     case 'near':
-      balance = await Near.getBalance(address);
-      res.status(200).json({ balance });
+      response = await Near(address);
+      res.status(200).json(response);
       break;
     default:
-      balance = {
-        decimal: 0,
-        total: '',
-        locked: '',
-        error: BalanceError.NOT_SUPPORTED_CHAIN,
-      };
-      res.status(200).json({ balance });
+      res.status(200).json({ error: BalanceError.NOT_SUPPORTED_CHAIN });
       break;
   }
 }
