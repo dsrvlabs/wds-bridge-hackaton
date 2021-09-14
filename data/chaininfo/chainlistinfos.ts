@@ -1,7 +1,7 @@
 import { ChainListInfo } from '../types';
 import { NETWORK, APR } from './config';
 
-export const ChainLists: { [key: string]: ChainListInfo } = {
+export const ChainListInfos: { [key: string]: ChainListInfo } = {
   agoric: {
     href: '/agoric',
     title: 'Agoric',
