@@ -13,7 +13,7 @@ export const ChainListInfos: { [key: string]: ChainListInfo } = {
     href: '/celo',
     title: 'Celo',
     img: '/img/logo/logo_celo.png',
-    apr: [2, 5],
+    apr: APR['celo'] || [0, 0],
     isMainnet: NETWORK['celo'] || false,
   },
   cosmos: {
