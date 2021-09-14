@@ -76,3 +76,14 @@ export enum PriceError {
   NO_ERROR = '',
   NOT_SUPPORTED_CHAIN = 'Not supported chain',
 }
+
+/*
+  홈페이지 메인 페이지 ChainListInfo interface
+*/
+export interface ChainListInfo {
+  href: string;
+  title: string;
+  img: string;
+  apr: number[];
+  isMainnet: boolean;
+}
