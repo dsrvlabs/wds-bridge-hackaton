@@ -16,7 +16,6 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
     case 'ethereum':
     case 'flow':
     case 'kusama':
-    case 'lido-dao':
     case 'lido-staked-ether':
     case 'mina-protocol':
     case 'persistence':
