@@ -1,9 +1,12 @@
-import { Epoch, EpochError, ApiResponse } from '@/data/types';
 import { Connection } from '@solana/web3.js';
+import { Epoch, EpochError, ApiResponse } from '@/data/types';
+import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
 
 export const getEpoch = async (chain: string): Promise<ApiResponse> => {
   let epochError: EpochError;
-  const URL = 'https://api.mainnet-beta.solana.com';
+  const URL = INFO['solana'].isMainnet
+    ? 'https://api.mainnet-beta.solana.com'
+    : 'https://api.devnet.solana.com';
   if (chain) {
     try {
       const SAMPLE_HISTORY_HOURS = 6;

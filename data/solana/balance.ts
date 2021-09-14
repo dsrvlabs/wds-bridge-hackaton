@@ -1,12 +1,10 @@
 import { Balance, BalanceError, ApiResponse } from '@/data/types';
-// import { STATUS } from '../data'; // status 구조 생각
-
-// const URL = STATUS['solana'].isMainnet
-//   ? 'https://api.mainnet-beta.solana.com'
-//   : 'https://api.devnet.solana.com';
+import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
 
 export const getBalance = async (address: string): Promise<ApiResponse> => {
-  const URL = 'https://api.devnet.solana.com';
+  const URL = INFO['solana'].isMainnet
+    ? 'https://api.mainnet-beta.solana.com'
+    : 'https://api.devnet.solana.com';
   let balanceError: BalanceError;
   if (address) {
     try {

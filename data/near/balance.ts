@@ -1,8 +1,13 @@
 import { Balance, BalanceError, ApiResponse } from '@/data/types';
+import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
 
 export const getBalance = async (address: string): Promise<ApiResponse> => {
-  const URL = 'https://rpc.mainnet.near.org';
-  const helperURL = 'https://helper.mainnet.near.org';
+  const URL = INFO['near'].isMainnet
+    ? 'https://rpc.mainnet.near.org'
+    : 'https://rpc.testnet.near.org';
+  const helperURL = INFO['near'].isMainnet
+    ? 'https://helper.mainnet.near.org'
+    : 'https://helper.testnet.near.org';
   let balanceError: BalanceError;
   if (address.includes(':')) {
     const helper = `${helperURL}/publicKey/${address}/accounts`;

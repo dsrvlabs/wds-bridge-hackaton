@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Stake, BalanceError, StakeStatus, ApiResponse } from '@/data/types';
 import { connect, keyStores, utils, providers } from 'near-api-js';
+import { Stake, BalanceError, StakeStatus, ApiResponse } from '@/data/types';
+import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
 
 const fetchPools = async (): Promise<any> => {
-  const URL = 'https://rpc.testnet.near.org';
+  const URL = INFO['near'].isMainnet
+    ? 'https://rpc.mainnet.near.org'
+    : 'https://rpc.testnet.near.org';
   const provider = new providers.JsonRpcProvider(URL);
   const result: any = await provider.sendJsonRpc('validators', [null]);
   const pools: any[] = [];
@@ -16,8 +19,10 @@ const fetchPools = async (): Promise<any> => {
 };
 
 const filter = async (accountId: string): Promise<any> => {
-  const URL = 'https://rpc.testnet.near.org';
-  const networkId = 'mainnet';
+  const URL = INFO['near'].isMainnet
+    ? 'https://rpc.mainnet.near.org'
+    : 'https://rpc.testnet.near.org';
+  const networkId = INFO['near'].isMainnet ? 'mainnet' : 'testnet';
   const options = {
     nodeUrl: URL,
     networkId: networkId,
@@ -48,7 +53,9 @@ const filter = async (accountId: string): Promise<any> => {
 };
 
 export const getStake = async (address: string): Promise<ApiResponse> => {
-  const helperURL = 'https://helper.testnet.near.org';
+  const helperURL = INFO['near'].isMainnet
+    ? 'https://helper.mainnet.near.org'
+    : 'https://helper.testnet.near.org';
   let balanceError: BalanceError;
   let stakes: Stake[];
   if (address.includes(':')) {

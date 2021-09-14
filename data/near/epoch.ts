@@ -1,11 +1,14 @@
-import { Epoch, EpochError, ApiResponse } from '@/data/types';
 import { providers } from 'near-api-js';
+import { Epoch, EpochError, ApiResponse } from '@/data/types';
+import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
 
 export const getEpoch = async (chain: string): Promise<ApiResponse> => {
   let epochError: EpochError;
   if (chain) {
     try {
-      const RPC = 'https://rpc.mainnet.near.org';
+      const RPC = INFO['near'].isMainnet
+        ? 'https://rpc.mainnet.near.org'
+        : 'https://rpc.testnet.near.org';
       const provider = new providers.JsonRpcProvider(RPC);
       const finalBlock = await provider.block({ finality: 'final' });
       const firstBlock = await provider.block({ blockId: finalBlock.header.next_epoch_id });
