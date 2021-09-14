@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { connect, keyStores, utils, providers } from 'near-api-js';
 import { Stake, BalanceError, StakeStatus, ApiResponse } from '@/data/types';
-import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
+import { ChainListInfos as INFO } from '../chaininfo/chain-list-infos';
 
 const fetchPools = async (): Promise<any> => {
   const URL = INFO['near'].isMainnet

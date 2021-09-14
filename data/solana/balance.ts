@@ -1,5 +1,5 @@
 import { Balance, BalanceError, ApiResponse } from '@/data/types';
-import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
+import { ChainListInfos as INFO } from '../chaininfo/chain-list-infos';
 
 export const getBalance = async (address: string): Promise<ApiResponse> => {
   const URL = INFO['solana'].isMainnet

@@ -1,6 +1,6 @@
 import { Connection } from '@solana/web3.js';
 import { Epoch, EpochError, ApiResponse } from '@/data/types';
-import { ChainListInfos as INFO } from '../chaininfo/chainlistinfos';
+import { ChainListInfos as INFO } from '../chaininfo/chain-list-infos';
 
 export const getEpoch = async (chain: string): Promise<ApiResponse> => {
   let epochError: EpochError;
