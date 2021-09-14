@@ -124,3 +124,42 @@ export enum CalculatorError {
   NO_ERROR = '',
   NOT_SUPPORTED_CHAIN = 'Not supported chain',
 }
+
+/*
+  staking & unstkaing용 StakeInfo interface
+*/
+export interface StakeInfo {
+  title: string;
+  validators?: ChainValidator[];
+  defaultFee?: Fee;
+  explorer?: Explorer;
+  unstake?: Unstake;
+  chainType?: number;
+}
+
+export interface ChainValidator {
+  title: string;
+  address: string;
+  comission?: string;
+}
+
+export interface Fee {
+  defaultFee: string;
+}
+
+export interface Explorer {
+  mainnet: {
+    address: string;
+    tx: string;
+  };
+  testnet: {
+    address: string;
+    tx: string;
+  };
+}
+
+export interface Unstake {
+  hasStakeAccount?: boolean;
+  isAmountSetable?: boolean;
+  isClaim?: boolean;
+}
