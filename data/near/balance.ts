@@ -6,10 +6,14 @@ export const getBalance = async (address: string): Promise<ApiResponse> => {
   let balanceError: BalanceError;
   if (address.includes(':')) {
     const helper = `${helperURL}/publicKey/${address}/accounts`;
-    const accountIds = await fetch(helper).then((res) => {
-      return res.json();
-    });
-    address = accountIds[Object.keys(accountIds).length - 1];
+    const response = await fetch(helper);
+    if (response.status >= 200 && response.status <= 299) {
+      const accountIds = await response.json();
+      // console.log(accountIds);
+      address = accountIds[Object.keys(accountIds).length - 1];
+    } else {
+      console.log(response.status, response.statusText);
+    }
   }
   if (address) {
     try {
