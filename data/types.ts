@@ -1,7 +1,7 @@
 export interface ApiResponse {
   api: string;
-  data?: Balance | Epoch | Price | Stake[];
-  error?: BalanceError | EpochError | PriceError;
+  data?: Balance | Epoch | Price | Stake[] | StakingStatus | Calculator;
+  error?: BalanceError | EpochError | PriceError | StakingStatusError | CalculatorError;
 }
 
 /*
@@ -86,4 +86,41 @@ export interface ChainListInfo {
   img: string;
   apr: number[];
   isMainnet: boolean;
+}
+
+/*
+  체인별 세부 페이지 ChainInfo interface
+*/
+export interface ChainInfo {
+  title: string;
+  links: {
+    [key: string]: string;
+  };
+  subtitle: string;
+  stakingStatus?: StakingStatus;
+  calculator?: Calculator;
+  chainType?: number;
+}
+
+export interface StakingStatus {
+  staking: number;
+  delegators: number;
+  reward: number;
+  comission: number;
+}
+
+export enum StakingStatusError {
+  NO_ERROR = '',
+  NOT_SUPPORTED_CHAIN = 'Not supported chain',
+}
+
+export interface Calculator {
+  defaultAmount: number;
+  maxAmount: number;
+  apr: number;
+}
+
+export enum CalculatorError {
+  NO_ERROR = '',
+  NOT_SUPPORTED_CHAIN = 'Not supported chain',
 }
