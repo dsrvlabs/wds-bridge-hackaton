@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BalanceError, StakeStatus, ApiResponse } from '@/data/types';
+import { Stake, BalanceError, StakeStatus, ApiResponse } from '@/data/types';
 import { connect, keyStores, utils, providers } from 'near-api-js';
 
 const fetchPools = async (): Promise<any> => {
@@ -50,7 +50,7 @@ const filter = async (accountId: string): Promise<any> => {
 export const getStake = async (address: string): Promise<ApiResponse> => {
   const helperURL = 'https://helper.testnet.near.org';
   let balanceError: BalanceError;
-  let stakes: ApiResponse;
+  let stakes: Stake[];
   if (address.includes(':')) {
     const helper = `${helperURL}/publicKey/${address}/accounts`;
     const accountIds = await fetch(helper).then((res) => {
@@ -63,21 +63,20 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
       const blockValidator = await filter(address);
       // console.log(blockValidator)
       if (blockValidator.length > 0) {
-        stakes = {
-          api: 'v1/stake/near',
-          data: blockValidator.map((item: any) => {
-            return {
-              validator: {
-                address: item.accountId,
-              },
-              value: parseFloat(item.stakeBalance).toString(),
-              status: StakeStatus.DELEGATED,
-            };
-          }),
+        stakes = blockValidator.map((item: any) => {
+          return {
+            validator: {
+              address: item.accountId,
+            },
+            value: parseFloat(item.stakeBalance).toString(),
+            status: StakeStatus.DELEGATED,
+          };
+        });
+        return {
+          api: '',
+          data: stakes,
           error: BalanceError.NO_ERROR,
         };
-
-        return stakes;
       } else {
         balanceError = BalanceError.ADDRESS_ERROR;
       }
@@ -87,9 +86,8 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
   } else {
     balanceError = BalanceError.NO_ADDRESS;
   }
-  stakes = {
-    api: 'v1/stake/near',
+  return {
+    api: '',
     error: balanceError,
   };
-  return stakes;
 };

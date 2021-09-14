@@ -6,16 +6,16 @@ import { EpochError, ApiResponse } from '@/data/types';
 
 export default async function handler(req: any, res: NextApiResponse): Promise<void> {
   const chain = req.query.chain;
-  let response: ApiResponse;
+  let apiResponse: ApiResponse;
 
   switch (chain) {
     case 'near':
-      response = await Near(chain);
-      res.status(200).json(response);
+      apiResponse = await Near(chain);
+      res.status(200).json({ ...apiResponse, api: `v1/epoch/${chain}` });
       break;
     case 'solana':
-      response = await Solana(chain);
-      res.status(200).json(response);
+      apiResponse = await Solana(chain);
+      res.status(200).json({ ...apiResponse, api: `v1/epoch/${chain}` });
       break;
     default:
       res.status(200).json({ error: EpochError.NOT_SUPPORTED_CHAIN });

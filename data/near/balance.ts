@@ -1,4 +1,4 @@
-import { BalanceError, ApiResponse } from '@/data/types';
+import { Balance, BalanceError, ApiResponse } from '@/data/types';
 
 export const getBalance = async (address: string): Promise<ApiResponse> => {
   const URL = 'https://rpc.mainnet.near.org';
@@ -31,25 +31,24 @@ export const getBalance = async (address: string): Promise<ApiResponse> => {
         }),
       });
       const block = await response.json();
-      const balance: ApiResponse = {
-        api: 'v1/balance/near',
-        data: {
-          decimal: 24,
-          total: block.result.amount,
-          locked: block.result.locked,
-        },
+      const balance: Balance = {
+        decimal: 24,
+        total: block.result.amount,
+        locked: block.result.locked,
+      };
+      return {
+        api: '',
+        data: balance,
         error: BalanceError.NO_ERROR,
       };
-      return balance;
     } catch (error) {
       balanceError = BalanceError.ADDRESS_ERROR;
     }
   } else {
     balanceError = BalanceError.NO_ADDRESS;
   }
-  const balance: ApiResponse = {
-    api: 'v1/balance/near',
+  return {
+    api: '',
     error: balanceError,
   };
-  return balance;
 };

@@ -1,4 +1,4 @@
-import { EpochError, ApiResponse } from '@/data/types';
+import { Epoch, EpochError, ApiResponse } from '@/data/types';
 import { Connection } from '@solana/web3.js';
 
 export const getEpoch = async (chain: string): Promise<ApiResponse> => {
@@ -32,25 +32,24 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
       const epochTimeTotal = epochInfo.slotsInEpoch * hourlySlotTime;
       const epochStartTime = epochEndTime - epochTimeTotal;
       // console.log('Epoch start time (approx.)	- ', epochStartTime);
-      const epoch: ApiResponse = {
-        api: 'v1/epoch/solana',
-        data: {
-          epochStartTime: epochStartTime,
-          epochEndTime: epochEndTime,
-        },
+      const epoch: Epoch = {
+        epochStartTime: epochStartTime,
+        epochEndTime: epochEndTime,
+      };
+      return {
+        api: '',
+        data: epoch,
         error: EpochError.NO_ERROR,
       };
       // console.log(epoch);
-      return epoch;
     } catch (error) {
       epochError = EpochError.TIME_ERROR;
     }
   } else {
     epochError = EpochError.NO_ERROR;
   }
-  const epoch: ApiResponse = {
-    api: 'v1/epoch/solana',
+  return {
+    api: '',
     error: epochError,
   };
-  return epoch;
 };

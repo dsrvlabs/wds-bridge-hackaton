@@ -7,16 +7,16 @@ import { BalanceError, ApiResponse } from '@/data/types';
 export default async function handler(req: any, res: NextApiResponse): Promise<void> {
   const address = req.query.address;
   const chain = req.query.chain;
-  let response: ApiResponse;
+  let apiResponse: ApiResponse;
 
   switch (chain) {
     case 'solana':
-      response = await Solana(address);
-      res.status(200).json(response);
+      apiResponse = await Solana(address);
+      res.status(200).json({ ...apiResponse, api: `v1/stake/${chain}` });
       break;
     case 'near':
-      response = await Near(address);
-      res.status(200).json(response);
+      apiResponse = await Near(address);
+      res.status(200).json({ ...apiResponse, api: `v1/stake/${chain}` });
       break;
     default:
       res.status(200).json({ error: BalanceError.NOT_SUPPORTED_CHAIN });

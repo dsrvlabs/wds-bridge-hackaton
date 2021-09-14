@@ -1,4 +1,4 @@
-import { BalanceError, ApiResponse } from '@/data/types';
+import { Balance, BalanceError, ApiResponse } from '@/data/types';
 // import { STATUS } from '../data'; // status 구조 생각
 
 // const URL = STATUS['solana'].isMainnet
@@ -25,25 +25,24 @@ export const getBalance = async (address: string): Promise<ApiResponse> => {
       });
       const block = await response.json();
       // console.log(JSON.stringify(block));
-      const balance: ApiResponse = {
-        api: 'v1/balance/solana',
-        data: {
-          decimal: 9,
-          total: block.result.value,
-          locked: '',
-        },
+      const balance: Balance = {
+        decimal: 9,
+        total: block.result.value,
+        locked: '',
+      };
+      return {
+        api: '',
+        data: balance,
         error: BalanceError.NO_ERROR,
       };
-      return balance;
     } catch (error) {
       balanceError = BalanceError.ADDRESS_ERROR;
     }
   } else {
     balanceError = BalanceError.NO_ADDRESS;
   }
-  const balance: ApiResponse = {
-    api: 'v1/balance/solana',
+  return {
+    api: '',
     error: balanceError,
   };
-  return balance;
 };

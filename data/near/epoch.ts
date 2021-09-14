@@ -1,4 +1,4 @@
-import { EpochError, ApiResponse } from '@/data/types';
+import { Epoch, EpochError, ApiResponse } from '@/data/types';
 import { providers } from 'near-api-js';
 
 export const getEpoch = async (chain: string): Promise<ApiResponse> => {
@@ -21,25 +21,24 @@ export const getEpoch = async (chain: string): Promise<ApiResponse> => {
       const epochProgressTimeStamp = (timeStamp * 1000000 - epochTimeStamp) / 1000000; // 이번 에폭 남은 시간
       const epochTime = epochProgressTimeStamp / epochProgress; // 이번 에폭 총 시간
       const epochEndTime = Math.round(epochStartTime + epochTime);
-      const epoch: ApiResponse = {
-        api: 'v1/epoch/near',
-        data: {
-          epochStartTime: epochStartTime,
-          epochEndTime: epochEndTime,
-        },
+      const epoch: Epoch = {
+        epochStartTime: epochStartTime,
+        epochEndTime: epochEndTime,
+      };
+      return {
+        api: '',
+        data: epoch,
         error: EpochError.NO_ERROR,
       };
       // console.log(epoch);
-      return epoch;
     } catch (error) {
       epochError = EpochError.TIME_ERROR;
     }
   } else {
     epochError = EpochError.NO_ERROR;
   }
-  const epoch: ApiResponse = {
-    api: 'v1/epoch/near',
+  return {
+    api: '',
     error: epochError,
   };
-  return epoch;
 };

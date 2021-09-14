@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BalanceError, StakeStatus, ApiResponse } from '@/data/types';
+import { Stake, BalanceError, StakeStatus, ApiResponse } from '@/data/types';
 // import { STATUS } from '../data'; // status 구조 생각
 
 // const URL = STATUS['solana'].isMainnet
@@ -9,7 +9,7 @@ import { BalanceError, StakeStatus, ApiResponse } from '@/data/types';
 export const getStake = async (address: string): Promise<ApiResponse> => {
   const URL = 'https://api.devnet.solana.com';
   let balanceError: BalanceError;
-  let stakes: ApiResponse;
+  let stakes: Stake[];
   if (address) {
     try {
       const response = await fetch(URL, {
@@ -41,7 +41,7 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
       const block = await response.json();
       // console.log(JSON.stringify(block));
       if (block.result.length > 0) {
-        const data = block.result.map(async (item: any) => {
+        stakes = block.result.map(async (item: any) => {
           const responseState = await fetch(URL, {
             method: 'POST',
             headers: {
@@ -87,12 +87,11 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
             };
           }
         });
-        stakes = {
-          api: 'v1/stake/solana',
-          data: await Promise.all(data),
+        return {
+          api: '',
+          data: await Promise.all(stakes),
           error: BalanceError.NO_ERROR,
         };
-        return stakes;
       } else {
         balanceError = BalanceError.ADDRESS_ERROR;
       }
@@ -102,9 +101,8 @@ export const getStake = async (address: string): Promise<ApiResponse> => {
   } else {
     balanceError = BalanceError.NO_ADDRESS;
   }
-  stakes = {
-    api: 'v1/stake/solana',
+  return {
+    api: '',
     error: balanceError,
   };
-  return stakes;
 };
