@@ -11,14 +11,16 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
   switch (chain) {
     case 'near':
       apiResponse = await Near(chain);
-      res.status(200).json({ ...apiResponse, api: `v1/epoch/${chain}` });
       break;
     case 'solana':
       apiResponse = await Solana(chain);
-      res.status(200).json({ ...apiResponse, api: `v1/epoch/${chain}` });
       break;
     default:
-      res.status(200).json({ error: EpochError.NOT_SUPPORTED_CHAIN });
+      apiResponse = {
+        api: '',
+        error: EpochError.NOT_SUPPORTED_CHAIN,
+      };
       break;
   }
+  res.status(200).json({ ...apiResponse, api: `v1/epoch/${chain}` });
 }

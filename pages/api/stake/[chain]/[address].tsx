@@ -12,14 +12,16 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
   switch (chain) {
     case 'solana':
       apiResponse = await Solana(address);
-      res.status(200).json({ ...apiResponse, api: `v1/stake/${chain}` });
       break;
     case 'near':
       apiResponse = await Near(address);
-      res.status(200).json({ ...apiResponse, api: `v1/stake/${chain}` });
       break;
     default:
-      res.status(200).json({ error: BalanceError.NOT_SUPPORTED_CHAIN });
+      apiResponse = {
+        api: '',
+        error: BalanceError.NOT_SUPPORTED_CHAIN,
+      };
       break;
   }
+  res.status(200).json({ ...apiResponse, api: `v1/stake/${chain}` });
 }

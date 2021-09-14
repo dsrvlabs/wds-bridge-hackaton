@@ -43,14 +43,20 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
           },
           error: PriceError.NO_ERROR,
         };
-        res.status(200).json({ ...apiResponse, api: `v1/price/${chain}` });
       } else {
-        res.status(200).json({ error: PriceError.NOT_SUPPORTED_CHAIN });
+        apiResponse = {
+          api: '',
+          error: PriceError.NOT_SUPPORTED_CHAIN,
+        };
         // console.log(response.status, response.statusText);
       }
       break;
     default:
-      res.status(200).json({ error: PriceError.NOT_SUPPORTED_CHAIN });
+      apiResponse = {
+        api: '',
+        error: PriceError.NOT_SUPPORTED_CHAIN,
+      };
       break;
   }
+  res.status(200).json({ ...apiResponse, api: `v1/price/${chain}` });
 }
