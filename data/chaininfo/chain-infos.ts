@@ -25,14 +25,6 @@ export const ChainInfos: { [key: string]: ChainInfo } = {
     },
     subtitle: 'cosmosSubtite',
   },
-  eth2: {
-    title: 'Eth2',
-    links: {
-      home: 'https://www.ethereum.org/',
-      github: 'https://github.com/ethereum',
-    },
-    subtitle: 'eth2Subtite',
-  },
   flow: {
     title: 'Flow',
     links: {

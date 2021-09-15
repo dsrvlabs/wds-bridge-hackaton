@@ -7,7 +7,6 @@ export const NETWORK: { [key: string]: boolean } = {
   agoric: false,
   celo: false,
   cosmos: false,
-  eth2: false,
   flow: false,
   kusama: false,
   lido: false,
@@ -27,7 +26,6 @@ export const APR: { [key: string]: number[] } = {
   // agoric: [0, 0],
   celo: [2, 5],
   cosmos: [2, 9],
-  eth2: [0, 15],
   flow: [9, 10],
   kusama: [6, 14],
   lido: [0, 10],
@@ -135,22 +133,6 @@ export const VALIDATORS: {
         title: 'DSRV labs',
         address: '947771ab1fd233d8694aee6c4a4259ee7e2241f4a201067aaa28adbb989d7c97',
         comission: '10 %',
-      },
-    ],
-    testnet: [
-      {
-        title: '',
-        address: '',
-        comission: '',
-      },
-    ],
-  },
-  eth2: {
-    mainnet: [
-      {
-        title: 'DSRV labs',
-        address: '',
-        comission: '',
       },
     ],
     testnet: [

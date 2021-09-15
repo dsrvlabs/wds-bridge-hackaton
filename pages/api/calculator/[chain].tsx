@@ -14,11 +14,6 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
       maxAmount: 100000,
       apr: 8,
     },
-    eth2: {
-      defaultAmount: 30000,
-      maxAmount: 100000,
-      apr: 7,
-    },
     flow: {
       defaultAmount: 30000,
       maxAmount: 100000,
@@ -82,7 +77,6 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
     case 'agoric':
     case 'celo':
     case 'cosmos':
-    case 'eth2':
     case 'flow':
     case 'kusama':
     case 'lido':

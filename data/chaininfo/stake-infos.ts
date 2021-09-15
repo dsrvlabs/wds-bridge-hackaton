@@ -18,9 +18,6 @@ export const StakeInfos: { [key: string]: StakeInfo } = {
   cosmos: {
     title: 'Cosmos',
   },
-  eth2: {
-    title: 'Eth2',
-  },
   flow: {
     title: 'Flow',
   },

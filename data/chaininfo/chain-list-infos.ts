@@ -43,13 +43,6 @@ export const ChainListInfos: { [key: string]: ChainListInfo } = {
     apr: APR['cosmos'] || [0, 0],
     isMainnet: NETWORK['cosmos'] || false,
   },
-  eth2: {
-    href: '/eth2',
-    title: 'Eth2',
-    img: '/img/logo/logo_eth2.png',
-    apr: APR['eth2'] || [0, 0],
-    isMainnet: NETWORK['eth2'] || false,
-  },
   flow: {
     href: '/flow',
     title: 'Flow',

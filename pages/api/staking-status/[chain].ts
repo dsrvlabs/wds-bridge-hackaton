@@ -9,7 +9,6 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
     case 'agoric':
     case 'celo':
     case 'cosmos':
-    case 'eth2':
     case 'flow':
     case 'kusama':
     case 'lido':
