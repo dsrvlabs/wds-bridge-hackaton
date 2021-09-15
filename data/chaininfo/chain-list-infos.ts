@@ -1,6 +1,26 @@
 import { ChainListInfo } from '../types';
 import { NETWORK, APR } from './config';
 
+export const ChainConverter: { [key: string]: string } = {
+  celo: 'celo',
+  mina: 'mina-protocol',
+  lido_eth: 'staked-ether',
+  lido_sol: 'lido-staked-sol',
+  near: 'near',
+  solana: 'solana',
+  cosmos: 'cosmos',
+  ethereum: 'ethereum',
+  flow: 'flow',
+  kusama: 'kusama',
+  persistence: 'persistence',
+  polkadot: 'polkadot',
+  matic: 'matic-network',
+  terra: 'terra-luna',
+  thegraph: 'the-graph',
+  thorchain: 'thorchain',
+  tokamak: 'tokamak-network',
+};
+
 export const ChainListInfos: { [key: string]: ChainListInfo } = {
   agoric: {
     href: '/agoric',
