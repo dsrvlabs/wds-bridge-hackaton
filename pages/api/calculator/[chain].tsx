@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextApiResponse } from 'next';
-import { CalculatorError, Calculator, ApiResponse } from '@/data/types';
+import { CalculatorError, Calculator, ApiResponse, ChainList } from '@/data/types';
+import { ChainConverter } from '@/data/chaininfo/chain-list-infos';
 
 export default async function handler(req: any, res: NextApiResponse): Promise<void> {
-  const CALCULATOR: { [key: string]: Calculator } = {
+  const CALCULATOR: ChainList<Calculator> = {
     celo: {
       defaultAmount: 30000,
       maxAmount: 100000,
@@ -24,7 +25,14 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
       maxAmount: 100000,
       apr: 8,
     },
-    lido: {
+    // TODO: 내용 수정
+    lido_eth: {
+      defaultAmount: 30000,
+      maxAmount: 100000,
+      apr: 7.5,
+    },
+    // TODO: 내용 수정
+    lido_sol: {
       defaultAmount: 30000,
       maxAmount: 100000,
       apr: 7.5,
@@ -69,42 +77,42 @@ export default async function handler(req: any, res: NextApiResponse): Promise<v
       maxAmount: 100000,
       apr: 4.5,
     },
+    // TODO: 내용 수정
+    ethereum: {
+      defaultAmount: 0,
+      maxAmount: 0,
+      apr: 0,
+    },
+    polkadot: {
+      defaultAmount: 0,
+      maxAmount: 0,
+      apr: 0,
+    },
+    thorchain: {
+      defaultAmount: 0,
+      maxAmount: 0,
+      apr: 0,
+    },
+    agoric: {
+      defaultAmount: 0,
+      maxAmount: 0,
+      apr: 0,
+    },
   };
 
   const chain = req.query.chain;
-  let apiResponse: ApiResponse;
-  switch (chain) {
-    case 'agoric':
-    case 'celo':
-    case 'cosmos':
-    case 'flow':
-    case 'kusama':
-    case 'lido':
-    case 'mina':
-    case 'near':
-    case 'persistence':
-    case 'polkadot':
-    case 'polygon':
-    case 'solana':
-    case 'thegraph':
-    case 'thorchain':
-    case 'tokamak':
-    case 'terra':
-      /*
-      TO DO: DB QUERY
-      */
-      apiResponse = {
-        api: '',
-        data: CALCULATOR[chain],
-        error: CalculatorError.NO_ERROR,
-      };
-      break;
-    default:
-      apiResponse = {
-        api: '',
-        error: CalculatorError.NOT_SUPPORTED_CHAIN,
-      };
-      break;
+  let apiResponse: ApiResponse = {
+    api: '',
+    error: CalculatorError.NOT_SUPPORTED_CHAIN,
+  };
+  if (ChainConverter[chain]) {
+    // TODO: DB QUERY
+    apiResponse = {
+      api: '',
+      data: CALCULATOR[chain],
+      error: CalculatorError.NO_ERROR,
+    };
   }
+
   res.status(200).json({ ...apiResponse, api: `v1/calculator/${chain}` });
 }
