@@ -1,15 +1,16 @@
-import { ChainValidator, Fee, Explorer, Unstake } from '@/data/types';
+import { ChainValidator, Fee, Explorer, Unstake, ChainList } from '@/data/types';
 
 /*
 ChainListInfo
 */
-export const NETWORK: { [key: string]: boolean } = {
+export const NETWORK: ChainList<boolean> = {
   agoric: false,
   celo: false,
   cosmos: false,
   flow: false,
   kusama: false,
-  lido: false,
+  lido_eth: false,
+  lido_sol: false,
   mina: false,
   near: false,
   persistence: false,
@@ -20,33 +21,34 @@ export const NETWORK: { [key: string]: boolean } = {
   thegraph: false,
   thorchain: false,
   tokamak: false,
+  ethereum: false,
 };
 
-export const APR: { [key: string]: number[] } = {
-  // agoric: [0, 0],
+export const APR: ChainList<number[]> = {
+  agoric: [0, 0], // TODO: 내용 수정
   celo: [2, 5],
   cosmos: [2, 9],
   flow: [9, 10],
   kusama: [6, 14],
-  lido: [0, 10],
+  lido_eth: [0, 10], // TODO: 내용 수정
+  lido_sol: [0, 10], // TODO: 내용 수정
   mina: [0, 15],
   near: [6, 8],
   persistence: [0, 42],
-  // polkadot: [0, 0],
+  polkadot: [0, 0], // TODO: 내용 수정
   polygon: [9, 10],
   solana: [0, 8],
   terra: [5, 10],
   thegraph: [1, 6],
-  // thorchain: [0, 0],
+  thorchain: [0, 0], // TODO: 내용 수정
   tokamak: [3, 6],
+  ethereum: [0, 0], // TODO: 내용 수정
 };
 
 /*
 StakeInfo
 */
-export const VALIDATORS: {
-  [key: string]: { mainnet: ChainValidator[]; testnet: ChainValidator[] };
-} = {
+export const VALIDATORS: ChainList<{ mainnet: ChainValidator[]; testnet: ChainValidator[] }> = {
   mina: {
     mainnet: [
       {
@@ -159,7 +161,23 @@ export const VALIDATORS: {
       },
     ],
   },
-  lido: {
+  lido_eth: {
+    mainnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+    testnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+  },
+  lido_sol: {
     mainnet: [
       {
         title: '',
@@ -255,9 +273,73 @@ export const VALIDATORS: {
       },
     ],
   },
+  ethereum: {
+    mainnet: [
+      {
+        title: 'DSRV labs',
+        address: '',
+        comission: '',
+      },
+    ],
+    testnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+  },
+  polkadot: {
+    mainnet: [
+      {
+        title: 'DSRV labs',
+        address: '',
+        comission: '',
+      },
+    ],
+    testnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+  },
+  thorchain: {
+    mainnet: [
+      {
+        title: 'DSRV labs',
+        address: '',
+        comission: '',
+      },
+    ],
+    testnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+  },
+  agoric: {
+    mainnet: [
+      {
+        title: 'DSRV labs',
+        address: '',
+        comission: '',
+      },
+    ],
+    testnet: [
+      {
+        title: '',
+        address: '',
+        comission: '',
+      },
+    ],
+  },
 };
 
-export const DEFAULTFEE: { [key: string]: Fee } = {
+export const DEFAULTFEE: ChainList<Fee> = {
   mina: {
     defaultFee: '0.001', // 단위는 MINA
   },
@@ -267,10 +349,55 @@ export const DEFAULTFEE: { [key: string]: Fee } = {
   solana: {
     defaultFee: '0.000005',
   },
+  celo: {
+    defaultFee: '',
+  },
+  lido_eth: {
+    defaultFee: '',
+  },
+  lido_sol: {
+    defaultFee: '',
+  },
+  cosmos: {
+    defaultFee: '',
+  },
+  ethereum: {
+    defaultFee: '',
+  },
+  flow: {
+    defaultFee: '',
+  },
+  kusama: {
+    defaultFee: '',
+  },
+  persistence: {
+    defaultFee: '',
+  },
+  polkadot: {
+    defaultFee: '',
+  },
+  polygon: {
+    defaultFee: '',
+  },
+  terra: {
+    defaultFee: '',
+  },
+  thegraph: {
+    defaultFee: '',
+  },
+  thorchain: {
+    defaultFee: '',
+  },
+  tokamak: {
+    defaultFee: '',
+  },
+  agoric: {
+    defaultFee: '',
+  },
   // add blockchains...
 };
 
-export const EXPLORER: { [key: string]: Explorer } = {
+export const EXPLORER: ChainList<Explorer> = {
   mina: {
     mainnet: {
       address: `https://minaexplorer.com/wallet/`,
@@ -303,10 +430,160 @@ export const EXPLORER: { [key: string]: Explorer } = {
       tx: `https://explorer.solana.com/tx/`,
     },
   },
+  celo: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  lido_eth: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  lido_sol: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  cosmos: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  ethereum: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  flow: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  kusama: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  persistence: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  polkadot: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  polygon: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  terra: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  thegraph: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  thorchain: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  tokamak: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
+  agoric: {
+    mainnet: {
+      address: ``,
+      tx: ``,
+    },
+    testnet: {
+      address: ``,
+      tx: ``,
+    },
+  },
   // add blockchains...
 };
 
-export const UNSTAKE: { [key: string]: Unstake } = {
+export const UNSTAKE: ChainList<Unstake> = {
   // add blockchains...
   near: {
     hasStakeAccount: false,
@@ -318,4 +595,20 @@ export const UNSTAKE: { [key: string]: Unstake } = {
     isAmountSetable: false,
     isClaim: false,
   },
+  celo: {},
+  mina: {},
+  lido_eth: {},
+  lido_sol: {},
+  cosmos: {},
+  ethereum: {},
+  flow: {},
+  kusama: {},
+  persistence: {},
+  polkadot: {},
+  polygon: {},
+  terra: {},
+  thegraph: {},
+  thorchain: {},
+  tokamak: {},
+  agoric: {},
 };

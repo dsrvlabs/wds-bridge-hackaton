@@ -1,6 +1,6 @@
-import { ChainInfo } from '../types';
+import { ChainInfo, ChainList } from '@/data/types';
 
-export const ChainInfos: { [key: string]: ChainInfo } = {
+export const ChainInfos: ChainList<ChainInfo> = {
   agoric: {
     title: 'Agoric',
     links: {
@@ -41,7 +41,17 @@ export const ChainInfos: { [key: string]: ChainInfo } = {
     },
     subtitle: 'kusamaSubtite',
   },
-  lido: {
+  // TODO: 내용 수정
+  lido_eth: {
+    title: 'Lido',
+    links: {
+      home: 'https://lido.fi/',
+      github: 'https://github.com/lidofinance',
+    },
+    subtitle: 'lidoSubtite',
+  },
+  // TODO: 내용 수정
+  lido_sol: {
     title: 'Lido',
     links: {
       home: 'https://lido.fi/',
@@ -128,5 +138,14 @@ export const ChainInfos: { [key: string]: ChainInfo } = {
       github: 'https://github.com/Onther-Tech',
     },
     subtitle: 'tokamakSubtite',
+  },
+  // TODO: 내용 수정
+  ethereum: {
+    title: 'Ethereum',
+    links: {
+      home: '',
+      github: '',
+    },
+    subtitle: '',
   },
 };

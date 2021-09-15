@@ -1,8 +1,8 @@
-import { StakeInfo } from '../types';
+import { StakeInfo, ChainList } from '@/data/types';
 import { ChainListInfos as INFO } from './chain-list-infos';
 import { VALIDATORS, DEFAULTFEE, EXPLORER, UNSTAKE } from './config';
 
-export const StakeInfos: { [key: string]: StakeInfo } = {
+export const StakeInfos: ChainList<StakeInfo> = {
   agoric: {
     title: 'Agoric',
     validators: INFO['agoric'].isMainnet
@@ -24,8 +24,11 @@ export const StakeInfos: { [key: string]: StakeInfo } = {
   kusama: {
     title: 'Kusama',
   },
-  lido: {
-    title: 'Lido',
+  lido_eth: {
+    title: 'Lido staked ethereum',
+  },
+  lido_sol: {
+    title: 'Lido staked solana',
   },
   mina: {
     title: 'Mina',
@@ -56,5 +59,8 @@ export const StakeInfos: { [key: string]: StakeInfo } = {
   },
   tokamak: {
     title: 'Tokamak',
+  },
+  ethereum: {
+    title: 'Ethereum',
   },
 };

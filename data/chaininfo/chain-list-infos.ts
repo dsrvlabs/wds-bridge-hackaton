@@ -1,7 +1,7 @@
-import { ChainListInfo } from '../types';
+import { ChainListInfo, ChainList } from '@/data/types';
 import { NETWORK, APR } from './config';
 
-export const ChainConverter: { [key: string]: string } = {
+export const ChainConverter: ChainList<string> = {
   celo: 'celo',
   mina: 'mina-protocol',
   lido_eth: 'staked-ether',
@@ -14,20 +14,21 @@ export const ChainConverter: { [key: string]: string } = {
   kusama: 'kusama',
   persistence: 'persistence',
   polkadot: 'polkadot',
-  matic: 'matic-network',
+  polygon: 'matic-network',
   terra: 'terra-luna',
   thegraph: 'the-graph',
   thorchain: 'thorchain',
   tokamak: 'tokamak-network',
+  agoric: '', // 현재 지원X
 };
 
-export const ChainListInfos: { [key: string]: ChainListInfo } = {
+export const ChainListInfos: ChainList<ChainListInfo> = {
   agoric: {
     href: '/agoric',
     title: 'Agoric',
     img: '/img/logo/logo_agoric_grey.png',
     apr: APR['agoric'] || [0, 0],
-    isMainnet: NETWORK['agiric'] || false,
+    isMainnet: NETWORK['agoric'] || false,
   },
   celo: {
     href: '/celo',
@@ -57,12 +58,21 @@ export const ChainListInfos: { [key: string]: ChainListInfo } = {
     apr: APR['kusama'] || [0, 0],
     isMainnet: NETWORK['kusama'] || false,
   },
-  lido: {
+  // TODO: 내용 수정
+  lido_eth: {
     href: '/lido',
     title: 'Lido',
     img: '/img/logo/logo_lido.png',
-    apr: APR['lido'] || [0, 0],
-    isMainnet: NETWORK['lido'] || false,
+    apr: APR['lido_eth'] || [0, 0],
+    isMainnet: NETWORK['lido_eth'] || false,
+  },
+  // TODO: 내용 수정
+  lido_sol: {
+    href: '/lido',
+    title: 'Lido',
+    img: '/img/logo/logo_lido.png',
+    apr: APR['lido_sol'] || [0, 0],
+    isMainnet: NETWORK['lido_sol'] || false,
   },
   mina: {
     href: '/mina',
@@ -131,6 +141,14 @@ export const ChainListInfos: { [key: string]: ChainListInfo } = {
     href: '/tokamak',
     title: 'Tokamak',
     img: '/img/logo/logo_tokamak.png',
+    apr: APR['tokamak'] || [0, 0],
+    isMainnet: NETWORK['tokamak'] || false,
+  },
+  // TODO: 내용 수정
+  ethereum: {
+    href: '/ethereum',
+    title: 'Ethereum',
+    img: '',
     apr: APR['tokamak'] || [0, 0],
     isMainnet: NETWORK['tokamak'] || false,
   },

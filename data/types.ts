@@ -80,6 +80,27 @@ export enum PriceError {
 /*
   홈페이지 메인 페이지 ChainListInfo interface
 */
+export interface ChainList<T> {
+  celo: T;
+  mina: T;
+  lido_eth: T;
+  lido_sol: T;
+  near: T;
+  solana: T;
+  cosmos: T;
+  ethereum: T;
+  flow: T;
+  kusama: T;
+  persistence: T;
+  polkadot: T;
+  polygon: T;
+  terra: T;
+  thegraph: T;
+  thorchain: T;
+  tokamak: T;
+  agoric: T;
+}
+
 export interface ChainListInfo {
   href: string;
   title: string;
@@ -91,6 +112,7 @@ export interface ChainListInfo {
 /*
   체인별 세부 페이지 ChainInfo interface
 */
+
 export interface ChainInfo {
   title: string;
   links: {
