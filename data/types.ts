@@ -81,6 +81,7 @@ export enum PriceError {
   홈페이지 메인 페이지 ChainListInfo interface
 */
 export interface ChainList<T> {
+  [key: string]: T;
   celo: T;
   mina: T;
   lido_eth: T;
