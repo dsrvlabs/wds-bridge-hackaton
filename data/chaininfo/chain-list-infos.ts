@@ -1,0 +1,155 @@
+import { ChainListInfo, ChainList } from '@/data/types';
+import { NETWORK, APR } from './config';
+
+export const ChainConverter: ChainList<string> = {
+  celo: 'celo',
+  mina: 'mina-protocol',
+  lido_eth: 'staked-ether',
+  lido_sol: 'lido-staked-sol',
+  near: 'near',
+  solana: 'solana',
+  cosmos: 'cosmos',
+  ethereum: 'ethereum',
+  flow: 'flow',
+  kusama: 'kusama',
+  persistence: 'persistence',
+  polkadot: 'polkadot',
+  polygon: 'matic-network',
+  terra: 'terra-luna',
+  thegraph: 'the-graph',
+  thorchain: 'thorchain',
+  tokamak: 'tokamak-network',
+  agoric: '', // 현재 지원X
+};
+
+export const ChainListInfos: ChainList<ChainListInfo> = {
+  agoric: {
+    href: '/agoric',
+    title: 'Agoric',
+    img: '/img/logo/logo_agoric_grey.png',
+    apr: APR['agoric'] || [0, 0],
+    isMainnet: NETWORK['agoric'] || false,
+  },
+  celo: {
+    href: '/celo',
+    title: 'Celo',
+    img: '/img/logo/logo_celo.png',
+    apr: APR['celo'] || [0, 0],
+    isMainnet: NETWORK['celo'] || false,
+  },
+  cosmos: {
+    href: '/cosmos',
+    title: 'Cosmos',
+    img: '/img/logo/logo_cosmos.png',
+    apr: APR['cosmos'] || [0, 0],
+    isMainnet: NETWORK['cosmos'] || false,
+  },
+  flow: {
+    href: '/flow',
+    title: 'Flow',
+    img: '/img/logo/logo_flow.png',
+    apr: APR['cosmos'] || [0, 0],
+    isMainnet: NETWORK['flow'] || false,
+  },
+  kusama: {
+    href: '/kusama',
+    title: 'Kusama',
+    img: '/img/logo/logo_kusama.png',
+    apr: APR['kusama'] || [0, 0],
+    isMainnet: NETWORK['kusama'] || false,
+  },
+  // TODO: 내용 수정
+  lido_eth: {
+    href: '/lido',
+    title: 'Lido',
+    img: '/img/logo/logo_lido.png',
+    apr: APR['lido_eth'] || [0, 0],
+    isMainnet: NETWORK['lido_eth'] || false,
+  },
+  // TODO: 내용 수정
+  lido_sol: {
+    href: '/lido',
+    title: 'Lido',
+    img: '/img/logo/logo_lido.png',
+    apr: APR['lido_sol'] || [0, 0],
+    isMainnet: NETWORK['lido_sol'] || false,
+  },
+  mina: {
+    href: '/mina',
+    title: 'Mina',
+    img: '/img/logo/logo_mina.png',
+    apr: APR['mina'] || [0, 0],
+    isMainnet: NETWORK['mina'] || false,
+  },
+  near: {
+    href: '/near',
+    title: 'Near',
+    img: '/img/logo/logo_near.png',
+    apr: APR['near'] || [0, 0],
+    isMainnet: NETWORK['near'] || false,
+  },
+  persistence: {
+    href: '/persistence',
+    title: 'Persistence',
+    img: '/img/logo/logo_persistence.png',
+    apr: APR['persistence'] || [0, 0],
+    isMainnet: NETWORK['persistence'] || false,
+  },
+  polkadot: {
+    href: '/polkadot',
+    title: 'Polkadot',
+    img: '/img/logo/logo_polkadot.png',
+    apr: APR['cosmos'] || [0, 0],
+    isMainnet: NETWORK['polkadot'] || false,
+  },
+  polygon: {
+    href: '/polygon',
+    title: 'Polygon',
+    img: '/img/logo/logo_polygon.png',
+    apr: APR['polygon'] || [0, 0],
+    isMainnet: NETWORK['polygon'] || false,
+  },
+  solana: {
+    href: '/solana',
+    title: 'Solana',
+    img: '/img/logo/logo_solana.png',
+    apr: APR['solana'] || [0, 0],
+    isMainnet: NETWORK['solana'] || false,
+  },
+  terra: {
+    href: '/terra',
+    title: 'Terra',
+    img: '/img/logo/logo_terra.png',
+    apr: APR['terra'] || [0, 0],
+    isMainnet: NETWORK['terra'] || false,
+  },
+  thegraph: {
+    href: '/thegraph',
+    title: 'The Graph',
+    img: '/img/logo/logo_thegraph.png',
+    apr: APR['thegraph'] || [0, 0],
+    isMainnet: NETWORK['thegraph'] || false,
+  },
+  thorchain: {
+    href: '/thorchain',
+    title: 'THORChain',
+    img: '/img/logo/logo_thorchain.png',
+    apr: APR['thorchain'] || [0, 0],
+    isMainnet: NETWORK['thorchain'] || false,
+  },
+  tokamak: {
+    href: '/tokamak',
+    title: 'Tokamak',
+    img: '/img/logo/logo_tokamak.png',
+    apr: APR['tokamak'] || [0, 0],
+    isMainnet: NETWORK['tokamak'] || false,
+  },
+  // TODO: 내용 수정
+  ethereum: {
+    href: '/ethereum',
+    title: 'Ethereum',
+    img: '',
+    apr: APR['tokamak'] || [0, 0],
+    isMainnet: NETWORK['tokamak'] || false,
+  },
+};
