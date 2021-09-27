@@ -1,6 +1,6 @@
 # Top-level directory layout
 
-```jsx
+```
 ├── components                          # Elements for pages
 ├── data                                # External Resources
 ├── docs                                # Dev documentation
@@ -15,7 +15,7 @@
 
 ## components
 
-```jsx
+```
 .
 ├── ...
 ├── components
@@ -26,7 +26,7 @@
 
 ## data
 
-```jsx
+```
 .
 ├── ...
 ├── data
@@ -42,7 +42,7 @@
 
 ## docs
 
-```jsx
+```
 .
 ├── ...
 ├── docs
@@ -52,7 +52,7 @@
 
 ## layout
 
-```jsx
+```
 .
 ├── ...
 ├── layout
@@ -63,7 +63,7 @@
 
 ## pages
 
-```jsx
+```
 .
 ├── ...
 ├── pages
