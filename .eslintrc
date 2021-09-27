@@ -24,6 +24,7 @@
       "error",
       "expression"
     ],
+    "react/display-name": "off",
     "prefer-arrow-callback": "error",
     "react/react-in-jsx-scope": "off",
     "no-unused-expressions": 0,
