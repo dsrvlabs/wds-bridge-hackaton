@@ -42,7 +42,7 @@ export default function Page({ children }: Props): JSX.Element {
   const [themeMode, themeToggler, mountedComponent] = useDarkMode();
 
   return (
-    <ThemeProvider theme={getTheme(themeMode)}>
+    <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
       <CssBaseline />
       <Paper elevation={0}>{children}</Paper>
     </ThemeProvider>
