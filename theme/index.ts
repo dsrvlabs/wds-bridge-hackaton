@@ -8,6 +8,14 @@ const getTheme = (mode: string, themeToggler: () => void): Theme => {
     createTheme({
       palette: mode === 'light' ? light : dark,
       shadows: shadows(mode),
+      layout: {
+        contentWidth: 1600,
+        minWidth: 650,
+        fullWidth: '100%',
+        relative: 'relative',
+        absolute: 'absolute',
+        middle: '0 auto',
+      },
       typography: {
         fontFamily: '"Lato", sans-serif',
         button: {

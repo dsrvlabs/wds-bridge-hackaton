@@ -15,8 +15,14 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/data/*": [
+      "@data/*": [
         "data/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@layout/*": [
+        "layout/*"
       ]
     }
   },

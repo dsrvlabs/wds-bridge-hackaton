@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { CacheProvider } from '@emotion/react';
@@ -16,6 +17,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&display=swap"
             rel="stylesheet"
           />
+          <script
+            src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"
+            type="text/javascript"
+          ></script>
         </Head>
         <body>
           <Main />
