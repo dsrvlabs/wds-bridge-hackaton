@@ -1,7 +1,6 @@
 import React from 'react';
 import { MenuItem, Select, Avatar, Grid, FormControl, InputLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
-// import { useEffect } from 'react';
 
 const SelectBox = styled(Select)(() => {
   return {
@@ -18,14 +17,27 @@ const StyledAvatar = styled(Avatar)(({ theme }) => {
   };
 });
 
+export interface Account {
+  network: string;
+  address: string;
+}
+
 interface Props {
-  accounts: { network: string; address: string }[];
+  account: Account | null;
+  accounts: Account[];
   label: string;
+  onSelectAccount: (item: Account) => void;
   // setData: (key: string) => void;
   disabled: boolean;
 }
 
-export default function Menu(props: Props): JSX.Element {
+export default function Menu({
+  account,
+  accounts,
+  label,
+  onSelectAccount,
+  disabled,
+}: Props): JSX.Element {
   // TODO: dummy data
   // TODO: 지갑 연결 전에 disabled
   // console.log(props.disabled);
@@ -50,37 +62,49 @@ export default function Menu(props: Props): JSX.Element {
   connect();
   console.log('rr - ', address) */
 
-  const getIcon = (network: string): string => {
-    switch (network) {
+  const drawItem = (item: Account): JSX.Element => {
+    let icon = '/ethereum.png';
+
+    switch (item.network) {
       case 'evmos':
-        return '/evmos.png';
+        icon = '/evmos.png';
+        break;
       default:
         break;
     }
-    return '/ethereum.png';
+
+    return (
+      <Grid container direction="row">
+        <StyledAvatar src={icon} />
+        {item.address.length > 15
+          ? item.address.substring(0, 7) +
+            '...' +
+            item.address.substring(item.address.length - 7, item.address.length)
+          : item.address}
+      </Grid>
+    );
   };
 
   return (
-    <FormControl
-      variant="outlined"
-      sx={{ minWidth: 1 }}
-      placeholder="Select Network"
-      // onChange={props.setData('')}
-    >
-      <InputLabel>{props.label}</InputLabel>
-      <SelectBox disabled={props.disabled} label={props.label}>
-        {props.accounts.map((item, i) => {
-          // const test = item.length == 0 ? true : false;
+    <FormControl variant="outlined" sx={{ minWidth: 1 }} placeholder="Select Network">
+      <InputLabel>{label}</InputLabel>
+      <SelectBox
+        disabled={disabled}
+        label={label}
+        style={{ backgroundColor: '#9FBFFF26' }}
+        value={account ? `${account.network}:${account.address}` : ''}
+        onChange={(e): void => {
+          const temp = e.target.value as string;
+          onSelectAccount({
+            network: temp.split(':')[0],
+            address: temp.split(':')[1],
+          });
+        }}
+      >
+        {accounts.map((item, i) => {
           return (
-            <MenuItem key={i} value={JSON.stringify(item)}>
-              <Grid container direction="row" key={i}>
-                <StyledAvatar src={getIcon(item.network)} />
-                {item.address.length > 15
-                  ? item.address.substring(0, 7) +
-                    '...' +
-                    item.address.substring(item.address.length - 7, item.address.length)
-                  : item.address}
-              </Grid>
+            <MenuItem key={i} value={`${item.network}:${item.address}`}>
+              {drawItem(item)}
             </MenuItem>
           );
         })}

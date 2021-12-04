@@ -1,7 +1,6 @@
 import React from 'react';
 import { MenuItem, Select, Avatar, ListItemIcon, FormControl, InputLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
-// import { useEffect } from 'react';
 
 const SelectBox = styled(Select)(() => {
   return {
@@ -18,65 +17,68 @@ const StyledAvatar = styled(Avatar)(({ theme }) => {
   };
 });
 
+export interface Token {
+  name: string;
+  address: string;
+}
+
 interface Props {
-  tokens: { name: string; address: string }[];
+  token: Token | null;
+  tokens: Token[];
   label: string;
+  onSelectToken: (item: Token) => void;
   // setData: (key: string) => void;
   disabled: boolean;
 }
 
-export default function Menu(props: Props): JSX.Element {
-  // TODO: dummy data
-  // TODO: 지갑 연결 전에 disabled
-  // console.log(props.disabled);
-  // console.log(props.data == '')
-  // console.log('props', props);
-  // const [address, setAddress] = useState<string[]>(['example1', 'example2']);
+export default function Menu({
+  token,
+  tokens,
+  label,
+  onSelectToken,
+  disabled,
+}: Props): JSX.Element {
+  const drawItem = (item: Token): JSX.Element => {
+    let icon = '/ethereum.png';
 
-  /*   const [address, setAddress] = useState<string[]>(['']);
-  const connect = async (): Promise<void> => {
-    try {
-      const welldone = (window as any).welldone;
-      if (welldone) {
-        await welldone.connectWallet();
-        const account = await welldone.getAccount('evmos');
-        setAddress(account);
-        console.log('connected to - ', account.address);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  connect();
-  console.log('rr - ', address) */
-
-  const getTokenIcon = (network: string): string => {
-    switch (network) {
+    switch (item.address) {
       case 'evmos':
-        return '/evmos.png';
+        icon = '/evmos.png';
+        break;
       default:
         break;
     }
-    return '/ethereum.png';
+
+    return (
+      <>
+        <ListItemIcon>
+          <StyledAvatar src={icon} />
+        </ListItemIcon>
+        {item.name}
+      </>
+    );
   };
 
   return (
-    <FormControl
-      variant="outlined"
-      sx={{ minWidth: 1 }}
-      placeholder="Select Network"
-      // onChange={props.setData('')}
-    >
-      <InputLabel>{props.label}</InputLabel>
-      <SelectBox disabled={props.disabled} label={props.label}>
-        {props.tokens.map((item, i) => {
-          // const test = item.length == 0 ? true : false;
+    <FormControl variant="outlined" sx={{ minWidth: 1 }} placeholder="Select Network">
+      <InputLabel>{label}</InputLabel>
+      <SelectBox
+        disabled={disabled}
+        label={label}
+        style={{ backgroundColor: '#9FBFFF26' }}
+        value={token ? `${token.name}:${token.address}` : ''}
+        onChange={(e): void => {
+          const temp = e.target.value as string;
+          onSelectToken({
+            name: temp.split(':')[0],
+            address: temp.split(':')[1],
+          });
+        }}
+      >
+        {tokens.map((item, i) => {
           return (
-            <MenuItem key={i} value={JSON.stringify(item)}>
-              <ListItemIcon>
-                <StyledAvatar src={getTokenIcon(item.address)} />
-              </ListItemIcon>
-              {item.name}
+            <MenuItem key={i} value={`${item.name}:${item.address}`}>
+              {drawItem(item)}
             </MenuItem>
           );
         })}

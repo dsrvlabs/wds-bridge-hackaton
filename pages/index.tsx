@@ -1,8 +1,7 @@
-/* eslint-disabled @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import {
+  Box,
   Grid,
-  Typography,
   FormControl,
   IconButton,
   TextField,
@@ -10,14 +9,13 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
-import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Layout from '@layout/index';
 import AppLayout from '@components/AppLayout';
 import Section from '@components/Section';
-import MenuAccount from '@components/Menu/account';
-import MenuToken from '@components/Menu/token';
+import Bridge from '@components/Menu/bridge';
+import MenuToken, { Token } from '@components/Menu/token';
+import { Account } from '@components/Menu/account';
 import History from '@components/History';
 
 const AmountInput = styled(TextField)(() => {
@@ -34,7 +32,7 @@ const AmountInput = styled(TextField)(() => {
 export default function Page(): JSX.Element {
   // TODO: dummy data
   // const address = ['0x48q359...E488d19', '0x49q359...E488d19', '0x50q359...E488d19'];
-  const tokenList: { [key: string]: { name: string; address: string }[] } = {
+  const tokenList: { [key: string]: Token[] } = {
     evmos: [
       {
         name: 'test token',
@@ -42,28 +40,39 @@ export default function Page(): JSX.Element {
       },
     ],
   };
-  const [tokens, setTokens] = useState<{ name: string; address: string }[]>([]);
-  const [accounts, setAccounts] = useState<{ network: string; address: string }[]>([]);
+  const [tokens, setTokens] = useState<Token[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
   const [disabled, setDisable] = useState<boolean>(true);
+
+  const [pair, setPair] = useState<(Account | null)[]>([null, null]);
+  const [token, setToken] = useState<Token | null>(null);
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
   useEffect(() => {
+    const getAccounts = async (network: string): Promise<Account[]> => {
+      const { welldone } = window as any;
+      if (welldone) {
+        const temp = await welldone.getAccount(network);
+        return [{ network: network, address: temp.address }];
+      }
+      return [];
+    };
     const connect = async (): Promise<void> => {
       try {
-        const defaultNetwork = 'evmos';
-        console.log('try');
-        const welldone = (window as any).welldone;
+        setDisable(true);
+        console.log('try connect');
+        const { welldone } = window as any;
         // TODO: injection 안됨
         console.log('welldone', welldone);
         if (welldone) {
           console.log('welldone true');
-          // await welldone.connectWallet();
-          const temp = await welldone.getAccount(defaultNetwork);
-          setAccounts([{ network: defaultNetwork, address: temp.address }]);
-          setTokens(tokenList['evmos']);
+          const a0 = await getAccounts('evmos');
+          const a1 = await getAccounts('ethereum');
+          const a2 = await getAccounts('cosmos');
+          setAccounts([...a0, ...a1, ...a2]);
+          setTokens([]);
           setDisable(false);
-          console.log('temp - ', temp);
         }
       } catch (error) {
         console.log(error);
@@ -90,116 +99,94 @@ export default function Page(): JSX.Element {
         const balance = 17; // TODO
         return (
           <>
-            <Section>
-              <Grid container spacing={15}>
-                <Grid
-                  container
-                  item
-                  textAlign="center"
-                  direction="row"
-                  justifyContent="space-between"
-                  spacing={3}
-                >
-                  <Grid container item xs={5} md={4} spacing={3}>
-                    <Grid item xs={12}>
-                      <Typography>From</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MenuAccount
-                        accounts={accounts}
-                        disabled={disabled}
-                        label={'Select Network'}
-                      />
-                    </Grid>
-                  </Grid>
-
+            <Box
+              style={{
+                height: '100%',
+                background:
+                  'radial-gradient(305.68% 144.33% at 49.88% 0%, #000000 1.62%, #000000 56.91%, #0F1D39 65.25%, #D7E5FF 83.36%)',
+              }}
+            >
+              <Section>
+                <Grid container spacing={20}>
                   <Grid
                     container
                     item
-                    xs={2}
-                    md={4}
+                    textAlign="center"
+                    direction="row"
+                    justifyContent="space-between"
                     spacing={3}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
+                    rowSpacing={12}
                   >
-                    <Grid item>
-                      <IconButton size="large" disabled={disabled}>
-                        <SwapHorizontalCircleIcon />
-                      </IconButton>
-                    </Grid>
-                    <Grid item>
-                      <TrendingFlatIcon />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container item xs={5} md={4} spacing={3}>
-                    <Grid item xs={12}>
-                      <Typography>To</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <MenuAccount
-                        accounts={accounts}
-                        disabled={disabled}
-                        label={'Select Network'}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
-
-                <Grid container item xs={12} textAlign="center" direction="row">
-                  <FormControl fullWidth variant="filled" disabled={disabled}>
-                    <AmountInput
-                      type="number"
-                      style={{ borderRadius: '27px' }}
+                    <Bridge
                       disabled={disabled}
-                      variant="outlined"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment
-                            position="start"
-                            sx={{ width: '400px', marginLeft: '-14px' }}
-                          >
-                            <MenuToken
-                              tokens={tokens}
-                              disabled={disabled}
-                              label={'Select Token (ERC20)'}
-                            />
-                          </InputAdornment>
-                        ),
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton color="warning" size="large" disabled={disabled}>
-                              <ArrowForwardIosIcon />
-                            </IconButton>
-                          </InputAdornment>
-                        ),
+                      accounts={accounts}
+                      pair={pair}
+                      updatePair={(items: (Account | null)[]): void => {
+                        if (items[0]) {
+                          setToken(null);
+                          setTokens(tokenList[items[0].network] || []);
+                        }
+                        setPair(items);
                       }}
                     />
-                    <FormHelperText>
-                      {' '}
-                      <Grid
-                        container
-                        textAlign="center"
-                        direction="row"
-                        justifyContent="space-between"
-                      >
-                        <Grid item xs={6} textAlign="start">
-                          <Typography variant="caption">MAX amount: {balance} Photon</Typography>
-                        </Grid>
-                        <Grid item xs={6} textAlign="end">
-                          <Typography variant="caption">Tx Fee: 0.04 Photon</Typography>
-                        </Grid>
-                      </Grid>
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Section>
 
-            <Section>
-              <History />
-            </Section>
+                    <Grid container item xs={12} textAlign="center" direction="row">
+                      <FormControl
+                        fullWidth
+                        variant="filled"
+                        disabled={disabled || tokens.length === 0}
+                      >
+                        <AmountInput
+                          type="number"
+                          style={{ borderRadius: '27px' }}
+                          disabled={disabled || tokens.length === 0}
+                          variant="outlined"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment
+                                position="start"
+                                sx={{ width: '400px', marginLeft: '-14px' }}
+                              >
+                                <MenuToken
+                                  disabled={disabled || tokens.length === 0}
+                                  token={token}
+                                  tokens={tokens}
+                                  label={'Select Token (ERC20)'}
+                                  onSelectToken={(item: {
+                                    name: string;
+                                    address: string;
+                                  }): void => {
+                                    setToken(item);
+                                  }}
+                                />
+                              </InputAdornment>
+                            ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  color="warning"
+                                  size="large"
+                                  disabled={disabled || tokens.length === 0}
+                                >
+                                  <ArrowForwardIosIcon />
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                        <FormHelperText>
+                          {`MAX amount: ${balance} Photon, Tx Fee: 0.04 Photon`}
+                        </FormHelperText>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <History />
+                  </Grid>
+                </Grid>
+              </Section>
+            </Box>
           </>
         );
       }}
