@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, Select, Avatar, Grid, FormControl, InputLabel } from '@mui/material';
+import { MenuItem, Select, Avatar, ListItemIcon, FormControl, InputLabel } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // import { useEffect } from 'react';
 
@@ -12,14 +12,14 @@ const SelectBox = styled(Select)(() => {
 
 const StyledAvatar = styled(Avatar)(({ theme }) => {
   return {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: theme.spacing(2),
+    height: theme.spacing(2),
     marginRight: theme.spacing(1),
   };
 });
 
 interface Props {
-  data: string[];
+  tokens: { name: string; address: string }[];
   label: string;
   // setData: (key: string) => void;
   disabled: boolean;
@@ -50,6 +50,16 @@ export default function Menu(props: Props): JSX.Element {
   connect();
   console.log('rr - ', address) */
 
+  const getTokenIcon = (network: string): string => {
+    switch (network) {
+      case 'evmos':
+        return '/evmos.png';
+      default:
+        break;
+    }
+    return '/ethereum.png';
+  };
+
   return (
     <FormControl
       variant="outlined"
@@ -59,16 +69,14 @@ export default function Menu(props: Props): JSX.Element {
     >
       <InputLabel>{props.label}</InputLabel>
       <SelectBox disabled={props.disabled} label={props.label}>
-        {props.data.map((item, i) => {
+        {props.tokens.map((item, i) => {
           // const test = item.length == 0 ? true : false;
           return (
-            <MenuItem key={i} value={item || 'evmos'}>
-              <Grid container direction="row" key={i}>
-                <StyledAvatar src={'evmos.png'} />
-                {item.length > 15
-                  ? item.substring(0, 7) + '...' + item.substring(item.length - 7, item.length)
-                  : item}
-              </Grid>
+            <MenuItem key={i} value={JSON.stringify(item)}>
+              <ListItemIcon>
+                <StyledAvatar src={getTokenIcon(item.address)} />
+              </ListItemIcon>
+              {item.name}
             </MenuItem>
           );
         })}

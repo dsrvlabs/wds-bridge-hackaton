@@ -16,7 +16,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Layout from '@layout/index';
 import AppLayout from '@components/AppLayout';
 import Section from '@components/Section';
-import Menu from '@components/Menu';
+import MenuAccount from '@components/Menu/account';
+import MenuToken from '@components/Menu/token';
 import History from '@components/History';
 
 const AmountInput = styled(TextField)(() => {
@@ -33,8 +34,16 @@ const AmountInput = styled(TextField)(() => {
 export default function Page(): JSX.Element {
   // TODO: dummy data
   // const address = ['0x48q359...E488d19', '0x49q359...E488d19', '0x50q359...E488d19'];
-  const token = ['Evmos']; // ['ethereum', 'evmos', 'cosmos'];
-  const [address, setAddress] = useState<string[]>(['']);
+  const tokenList: { [key: string]: { name: string; address: string }[] } = {
+    evmos: [
+      {
+        name: 'test token',
+        address: '',
+      },
+    ],
+  };
+  const [tokens, setTokens] = useState<{ name: string; address: string }[]>([]);
+  const [accounts, setAccounts] = useState<{ network: string; address: string }[]>([]);
   const [disabled, setDisable] = useState<boolean>(true);
   // const [data, setData] = useState('');
   // console.log('length - ', address);
@@ -42,6 +51,7 @@ export default function Page(): JSX.Element {
   useEffect(() => {
     const connect = async (): Promise<void> => {
       try {
+        const defaultNetwork = 'evmos';
         console.log('try');
         const welldone = (window as any).welldone;
         // TODO: injection 안됨
@@ -49,8 +59,9 @@ export default function Page(): JSX.Element {
         if (welldone) {
           console.log('welldone true');
           // await welldone.connectWallet();
-          const temp = await welldone.getAccount('evmos');
-          setAddress([temp.address]);
+          const temp = await welldone.getAccount(defaultNetwork);
+          setAccounts([{ network: defaultNetwork, address: temp.address }]);
+          setTokens(tokenList['evmos']);
           setDisable(false);
           console.log('temp - ', temp);
         }
@@ -94,7 +105,11 @@ export default function Page(): JSX.Element {
                       <Typography>From</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Menu data={address} disabled={disabled} label={'Select Network'} />
+                      <MenuAccount
+                        accounts={accounts}
+                        disabled={disabled}
+                        label={'Select Network'}
+                      />
                     </Grid>
                   </Grid>
 
@@ -123,7 +138,11 @@ export default function Page(): JSX.Element {
                       <Typography>To</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Menu data={address} disabled={disabled} label={'Select Network'} />
+                      <MenuAccount
+                        accounts={accounts}
+                        disabled={disabled}
+                        label={'Select Network'}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -131,6 +150,7 @@ export default function Page(): JSX.Element {
                 <Grid item xs={12} container textAlign="center" direction="row">
                   <FormControl fullWidth variant="filled" disabled={disabled}>
                     <AmountInput
+                      type="number"
                       style={{ borderRadius: '27px' }}
                       disabled={disabled}
                       variant="outlined"
@@ -140,7 +160,11 @@ export default function Page(): JSX.Element {
                             position="start"
                             sx={{ width: '400px', marginLeft: '-14px' }}
                           >
-                            <Menu data={token} disabled={disabled} label={'Select Token (ERC20)'} />
+                            <MenuToken
+                              tokens={tokens}
+                              disabled={disabled}
+                              label={'Select Token (ERC20)'}
+                            />
                           </InputAdornment>
                         ),
                         endAdornment: (
