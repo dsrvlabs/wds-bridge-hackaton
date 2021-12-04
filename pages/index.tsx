@@ -147,7 +147,7 @@ export default function Page(): JSX.Element {
                   </Grid>
                 </Grid>
 
-                <Grid item xs={12} container textAlign="center" direction="row">
+                <Grid container item xs={12} textAlign="center" direction="row">
                   <FormControl fullWidth variant="filled" disabled={disabled}>
                     <AmountInput
                       type="number"
@@ -179,7 +179,6 @@ export default function Page(): JSX.Element {
                     <FormHelperText>
                       {' '}
                       <Grid
-                        xs={12}
                         container
                         textAlign="center"
                         direction="row"
