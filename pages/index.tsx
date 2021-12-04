@@ -46,6 +46,7 @@ export default function Page(): JSX.Element {
 
   const [pair, setPair] = useState<(Account | null)[]>([null, null]);
   const [token, setToken] = useState<Token | null>(null);
+  const [value, setValue] = useState<number>(0);
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
@@ -91,6 +92,16 @@ export default function Page(): JSX.Element {
     // setTimeout(()=>{init()}, 1000);
     // setInterval(()=>{init()}, 500);
   }, []);
+
+  const onSndTransaction = (): void => {
+    console.log('----------------------------------');
+    console.log('snd');
+    console.log('from', pair[0]);
+    console.log('to', pair[1]);
+    console.log('token', token);
+    console.log('value', value);
+    console.log('----------------------------------');
+  };
 
   return (
     <AppLayout
@@ -141,6 +152,10 @@ export default function Page(): JSX.Element {
                           style={{ borderRadius: '27px' }}
                           disabled={disabled || tokens.length === 0}
                           variant="outlined"
+                          value={value}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+                            setValue(e.target.value as unknown as number);
+                          }}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment
@@ -167,6 +182,7 @@ export default function Page(): JSX.Element {
                                   color="warning"
                                   size="large"
                                   disabled={disabled || tokens.length === 0}
+                                  onClick={onSndTransaction}
                                 >
                                   <ArrowForwardIosIcon />
                                 </IconButton>
