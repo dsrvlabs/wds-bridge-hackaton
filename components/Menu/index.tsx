@@ -20,14 +20,15 @@ const StyledAvatar = styled(Avatar)(({ theme }) => {
 
 interface Props {
   data: string[];
+  label: string;
   // setData: (key: string) => void;
-  disable: boolean;
+  disabled: boolean;
 }
 
 export default function Menu(props: Props): JSX.Element {
   // TODO: dummy data
   // TODO: 지갑 연결 전에 disabled
-  // console.log(props.disable);
+  // console.log(props.disabled);
   // console.log(props.data == '')
   // console.log('props', props);
   // const [address, setAddress] = useState<string[]>(['example1', 'example2']);
@@ -56,8 +57,8 @@ export default function Menu(props: Props): JSX.Element {
       placeholder="Select Network"
       // onChange={props.setData('')}
     >
-      <InputLabel>Select Network</InputLabel>
-      <SelectBox disabled={props.disable}>
+      <InputLabel>{props.label}</InputLabel>
+      <SelectBox disabled={props.disabled} label={props.label}>
         {props.data.map((item, i) => {
           // const test = item.length == 0 ? true : false;
           return (

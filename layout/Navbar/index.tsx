@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { AppBar, Toolbar, Box } from '@mui/material';
+import { AppBar, Toolbar, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ListItems from './ListItems';
 
@@ -10,19 +10,10 @@ const FlexGrow = styled(Box)(() => {
   };
 });
 
-const StyledAppbar = styled(AppBar)(() => {
-  return {
-    background: 'transparent',
-    boxShadow: 'none',
-    height: 80,
-  };
-});
-
 const StyledToolbar = styled(Toolbar)(({ theme }) => {
   return {
     zIndex: 999,
     maxWidth: theme.layout.contentWidth,
-    height: 10,
     width: theme.layout.fullWidth,
     margin: theme.layout.middle,
   };
@@ -31,25 +22,17 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => {
 const Navbar = ({ /* className, */ ...rest }): JSX.Element => {
   // console.log('navbar', themeMode);
   return (
-    <StyledAppbar>
+    <AppBar>
       <StyledToolbar {...rest}>
         <Link href="/">
-          <a
-            style={{
-              textDecoration: 'none',
-              color: 'inherit',
-              fontSize: 24,
-              fontWeight: 400,
-              marginTop: 50,
-            }}
-          >
-            WELLDONE Bridge
+          <a>
+            <Typography variant="h5">WELLDONE Bridge</Typography>
           </a>
         </Link>
         <FlexGrow />
         <ListItems />
       </StyledToolbar>
-    </StyledAppbar>
+    </AppBar>
   );
 };
 

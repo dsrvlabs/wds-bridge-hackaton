@@ -7,7 +7,7 @@ import Page from '../components/Page';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import 'styles/globals.css';
 import 'styles/react-images.scss';
 import 'styles/slick-slider.scss';
 

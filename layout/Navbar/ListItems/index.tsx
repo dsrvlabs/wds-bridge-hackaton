@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { useState } from 'react';
 import Link from 'next/link';
-import { List, ListItem, styled, Button } from '@mui/material';
+import { List, ListItem, styled, Button, Typography } from '@mui/material';
 // import ABI from './welldone.json';
 
 const StyledList = styled(List)(() => {
@@ -10,12 +10,6 @@ const StyledList = styled(List)(() => {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  };
-});
-
-const Connect = styled(Button)(({ theme }) => {
-  return {
-    marginTop: theme.spacing(6),
   };
 });
 
@@ -65,22 +59,22 @@ const ListItems = (): JSX.Element => {
       <StyledList>
         {address.length == 0 ? ( // TODO
           <ListItem>
-            <Connect variant="contained" onClick={connect}>
+            <Button variant="contained" onClick={connect}>
               Connect
-            </Connect>
+            </Button>
           </ListItem>
         ) : null}
         <ListItem>
           <Link href="/" passHref>
-            <a style={{ textDecoration: 'none', color: 'inherit', fontSize: 16, marginTop: 50 }}>
-              Transaction
+            <a>
+              <Typography>Transaction</Typography>
             </a>
           </Link>
         </ListItem>
         <ListItem>
           <Link href="/history" passHref>
-            <a style={{ textDecoration: 'none', color: 'inherit', fontSize: 16, marginTop: 50 }}>
-              History
+            <a>
+              <Typography>History</Typography>
             </a>
           </Link>
         </ListItem>
