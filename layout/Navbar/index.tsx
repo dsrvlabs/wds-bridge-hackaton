@@ -19,18 +19,21 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => {
   };
 });
 
-const Navbar = ({ /* className, */ ...rest }): JSX.Element => {
+interface NavbarProps {
+  getLocalAccount: () => void;
+}
+const Navbar = ({ getLocalAccount }: NavbarProps): JSX.Element => {
   // console.log('navbar', themeMode);
   return (
     <AppBar>
-      <StyledToolbar {...rest}>
+      <StyledToolbar>
         <Link href="/">
           <a>
             <Typography variant="h5">WELLDONE Bridge</Typography>
           </a>
         </Link>
         <FlexGrow />
-        <ListItems />
+        <ListItems getLocalAccount={getLocalAccount}/>
       </StyledToolbar>
     </AppBar>
   );

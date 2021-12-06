@@ -8,11 +8,13 @@ interface Props2 {
   children: React.ReactNode;
   themeToggler: () => void;
   themeMode: string;
+  getLocalAccount: () => void;
 }
 
 interface Props {
   layout: React.FunctionComponent<Props2>;
   component: React.FunctionComponent<{ themeMode: string }>;
+  getLocalAccount: () => void;
 }
 
 export const useDarkMode = (): [string, () => void, boolean] => {
@@ -37,7 +39,7 @@ export const useDarkMode = (): [string, () => void, boolean] => {
   return [themeMode, themeToggler, mountedComponent];
 };
 
-export default function AppLayout({ component: Component, layout: Layout }: Props): JSX.Element {
+export default function AppLayout({ component: Component, layout: Layout, getLocalAccount: getLocalAccount }: Props): JSX.Element {
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -59,7 +61,7 @@ export default function AppLayout({ component: Component, layout: Layout }: Prop
       <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
         <CssBaseline />
         <Paper elevation={0}>
-          <Layout themeMode={themeMode === 'light' ? 'light' : 'dark'} themeToggler={themeToggler}>
+          <Layout themeMode={themeMode === 'light' ? 'light' : 'dark'} themeToggler={themeToggler} getLocalAccount={getLocalAccount}>
             <Component themeMode={themeMode === 'light' ? 'light' : 'dark'} />
           </Layout>
         </Paper>

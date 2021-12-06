@@ -50,48 +50,18 @@ export default function Page(): JSX.Element {
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
-  useEffect(() => {
-    const getAccounts = async (network: string): Promise<Account[]> => {
-      const { welldone } = window as any;
-      if (welldone) {
-        const temp = await welldone.getAccount(network);
-        return [{ network: network, address: temp.address }];
-      }
-      return [];
-    };
-    const connect = async (): Promise<void> => {
-      try {
-        setDisable(true);
-        console.log('try connect');
-        const { welldone } = window as any;
-        // TODO: injection 안됨
-        console.log('welldone', welldone);
-        if (welldone) {
-          console.log('welldone true');
-          const a0 = await getAccounts('evmos');
-          const a1 = await getAccounts('ethereum');
-          const a2 = await getAccounts('cosmos');
-          setAccounts([...a0, ...a1, ...a2]);
-          setTokens([]);
-          setDisable(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      // console.log('account - ', address);
+  const getLocalAccount = (): void => { // layout/Navbar/ListItems에서 실행
 
-      // TODO: 이더리움과 비교
-      if ((window as any).ethereum) {
-        // console.log((window as any).ethereum);
-      }
-    };
-    const init = async (): Promise<void> => {
-      await connect();
-    };
-    init();
-    // setTimeout(()=>{init()}, 1000);
-    // setInterval(()=>{init()}, 500);
-  }, []);
+    const localAccount = localStorage.getItem('accounts');
+    if (localAccount) {
+      const localAccountArray = JSON.parse(localAccount);
+      const a0 = localAccountArray[0];
+      const a1 = localAccountArray[1];
+      const a2 = localAccountArray[2];
+      setAccounts([a0, a1, a2]); 
+      setDisable(false);
+    }
+  }
 
   const onSndTransaction = (): void => {
     console.log('----------------------------------');
@@ -106,6 +76,7 @@ export default function Page(): JSX.Element {
   return (
     <AppLayout
       layout={Layout}
+      getLocalAccount={getLocalAccount}
       component={(): JSX.Element => {
         const balance = 17; // TODO
         return (
