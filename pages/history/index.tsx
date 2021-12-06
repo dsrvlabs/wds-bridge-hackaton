@@ -5,6 +5,7 @@ import Section from '@components/Section';
 import History from '@components/History';
 import { styled } from '@mui/material/styles';
 import { Button, Grid } from '@mui/material';
+import { Account } from '@components/Menu/account';
 
 const MainButton = styled(Button)(({ theme }) => {
   return {
@@ -21,6 +22,9 @@ export default function Page(): JSX.Element {
   return (
     <AppLayout
       layout={Layout}
+      connected={(accounts: Account[]): void => {
+        console.log('history', accounts);
+      }}
       component={(): JSX.Element => {
         return (
           <>

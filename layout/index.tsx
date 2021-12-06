@@ -9,11 +9,16 @@ const Navbar = dynamic(() => {
   return import('@layout/Navbar');
 });
 
-const Layout: React.FunctionComponent<LayoutProps> = ({ children, themeToggler, themeMode, getLocalAccount }) => {
+const Layout: React.FunctionComponent<LayoutProps> = ({
+  children,
+  themeToggler,
+  themeMode,
+  connected,
+}) => {
   // ThemeProvider for Navbar
   return (
     <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
-      <Navbar getLocalAccount={getLocalAccount} />
+      <Navbar connected={connected} />
       <main>
         <Divider />
         {children}

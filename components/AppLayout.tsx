@@ -3,18 +3,19 @@ import { ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import CssBaseline from '@mui/material/CssBaseline';
 import getTheme from 'theme';
+import { Account } from '@components/Menu/account';
 
 interface Props2 {
   children: React.ReactNode;
   themeToggler: () => void;
   themeMode: string;
-  getLocalAccount: () => void;
+  connected: (accounts: Account[]) => void;
 }
 
 interface Props {
   layout: React.FunctionComponent<Props2>;
   component: React.FunctionComponent<{ themeMode: string }>;
-  getLocalAccount: () => void;
+  connected: (accounts: Account[]) => void;
 }
 
 export const useDarkMode = (): [string, () => void, boolean] => {
@@ -39,7 +40,11 @@ export const useDarkMode = (): [string, () => void, boolean] => {
   return [themeMode, themeToggler, mountedComponent];
 };
 
-export default function AppLayout({ component: Component, layout: Layout, getLocalAccount: getLocalAccount }: Props): JSX.Element {
+export default function AppLayout({
+  component: Component,
+  layout: Layout,
+  connected: connected,
+}: Props): JSX.Element {
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -61,7 +66,11 @@ export default function AppLayout({ component: Component, layout: Layout, getLoc
       <ThemeProvider theme={getTheme(themeMode, themeToggler)}>
         <CssBaseline />
         <Paper elevation={0}>
-          <Layout themeMode={themeMode === 'light' ? 'light' : 'dark'} themeToggler={themeToggler} getLocalAccount={getLocalAccount}>
+          <Layout
+            themeMode={themeMode === 'light' ? 'light' : 'dark'}
+            themeToggler={themeToggler}
+            connected={connected}
+          >
             <Component themeMode={themeMode === 'light' ? 'light' : 'dark'} />
           </Layout>
         </Paper>

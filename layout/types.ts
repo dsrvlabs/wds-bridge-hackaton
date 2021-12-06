@@ -1,6 +1,8 @@
+import { Account } from '@components/Menu/account';
+
 export interface LayoutProps {
   children: React.ReactNode;
   themeToggler: () => void;
   themeMode: string;
-  getLocalAccount: () => void;
+  connected: (accounts: Account[]) => void;
 }

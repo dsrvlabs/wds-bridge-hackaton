@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Grid,
@@ -50,18 +50,15 @@ export default function Page(): JSX.Element {
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
-  const getLocalAccount = (): void => { // layout/Navbar/ListItems에서 실행
-
-    const localAccount = localStorage.getItem('accounts');
-    if (localAccount) {
-      const localAccountArray = JSON.parse(localAccount);
-      const a0 = localAccountArray[0];
-      const a1 = localAccountArray[1];
-      const a2 = localAccountArray[2];
-      setAccounts([a0, a1, a2]); 
+  const connected = (items: Account[]): void => {
+    // layout/Navbar/ListItems에서 실행
+    setAccounts(items);
+    if (items.length > 0) {
       setDisable(false);
+    } else {
+      setDisable(true);
     }
-  }
+  };
 
   const onSndTransaction = (): void => {
     console.log('----------------------------------');
@@ -76,7 +73,7 @@ export default function Page(): JSX.Element {
   return (
     <AppLayout
       layout={Layout}
-      getLocalAccount={getLocalAccount}
+      connected={connected}
       component={(): JSX.Element => {
         const balance = 17; // TODO
         return (

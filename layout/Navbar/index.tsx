@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { AppBar, Toolbar, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Account } from '@components/Menu/account';
 import ListItems from './ListItems';
 
 const FlexGrow = styled(Box)(() => {
@@ -20,9 +21,10 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => {
 });
 
 interface NavbarProps {
-  getLocalAccount: () => void;
+  connected: (accounts: Account[]) => void;
 }
-const Navbar = ({ getLocalAccount }: NavbarProps): JSX.Element => {
+
+const Navbar = ({ connected }: NavbarProps): JSX.Element => {
   // console.log('navbar', themeMode);
   return (
     <AppBar>
@@ -33,7 +35,7 @@ const Navbar = ({ getLocalAccount }: NavbarProps): JSX.Element => {
           </a>
         </Link>
         <FlexGrow />
-        <ListItems getLocalAccount={getLocalAccount}/>
+        <ListItems connected={connected} />
       </StyledToolbar>
     </AppBar>
   );

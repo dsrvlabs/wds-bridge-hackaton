@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { List, ListItem, styled, Button, Typography } from '@mui/material';
 import { Account } from '@components/Menu/account';
@@ -38,46 +38,64 @@ const StyledList = styled(List)(() => {
 }; */
 
 interface ListItemsProps {
-  getLocalAccount: () => void;
+  connected: (accounts: Account[]) => void;
 }
 
-const ListItems = ({ getLocalAccount }: ListItemsProps): JSX.Element => {
-  const [address, setAddress] = useState<string[]>([]);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+const ListItems = ({ connected }: ListItemsProps): JSX.Element => {
+  const [address, setAddress] = useState<Account[]>([]);
 
   const getAccounts = async (network: string): Promise<Account[]> => {
-      const { welldone } = window as any;
-      if (welldone) {
-        const temp = await welldone.getAccount(network);
-        // console.log(network)
-        return [{ network: network, address: temp.address }];
-      }
-      return [];
-    };
+    const { welldone } = window as any;
+    if (welldone) {
+      const temp = await welldone.getAccount(network);
+      // console.log(network)
+      return [{ network: network, address: temp.address }];
+    }
+    return [];
+  };
 
-  const connect = async (): Promise<void> => {
-      try {
-        // console.log('try connect');
-        // const { welldone } = window as any;
-          const a0 = await getAccounts('evmos');
-          const a1 = await getAccounts('ethereum');
-          const a2 = await getAccounts('cosmos');
-          const localAccounts = JSON.stringify([...a0, ...a1, ...a2]);
-          localStorage.setItem('accounts', localAccounts)
-          // console.log('stored - ', localStorage.getItem('accounts'));
-          getLocalAccount();
-        // console.log('executed');
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    const update = async () => {
+      const localAccount = localStorage.getItem('isConnected');
+      if (localAccount === 'true') {
+        await onConnect();
+      } else {
+        localStorage.removeItem('isConnected');
+        connected([]);
       }
     };
+    update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onConnect = async (): Promise<void> => {
+    try {
+      // console.log('try connect');
+      // const { welldone } = window as any;
+      const a0 = await getAccounts('evmos');
+      const a1 = await getAccounts('ethereum');
+      const a2 = await getAccounts('cosmos');
+      const addressAll = [...a0, ...a1, ...a2];
+
+      setAddress(addressAll);
+      if (addressAll.length > 0) {
+        localStorage.setItem('isConnected', 'true');
+      } else {
+        localStorage.removeItem('isConnected');
+      }
+      connected(addressAll);
+    } catch (error) {
+      localStorage.removeItem('isConnected');
+      connected([]);
+    }
+  };
 
   return (
     <div className="navbar-listitems">
       <StyledList>
         {address.length == 0 ? ( // TODO
           <ListItem>
-            <Button variant="contained" onClick={connect}>
+            <Button variant="contained" onClick={onConnect}>
               Connect
             </Button>
           </ListItem>
