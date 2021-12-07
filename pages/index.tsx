@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useRef } from 'react';
 import {
   Box,
@@ -11,6 +12,7 @@ import {
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import LockIcon from '@mui/icons-material/Lock';
+import CircularProgress from '@mui/material/CircularProgress';
 import Layout from '@layout/index';
 import AppLayout from '@components/AppLayout';
 import Section from '@components/Section';
@@ -43,6 +45,7 @@ export default function Page(): JSX.Element {
   const [balance, setBalance] = useState<string>('');
   const [disabled, setDisable] = useState<boolean>(true);
   const [approved, setApproved] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const textRef = useRef();
   // const [data, setData] = useState('');
@@ -113,6 +116,7 @@ export default function Page(): JSX.Element {
     console.log('address', address);
     console.log('----------------------------------');
     if (pair[0]) {
+      setLoading(true);
       setDisable(true);
       setApproved(false);
       const result = await Contracts.getBalanceOf(pair[0].network, address, pair[0].address);
@@ -120,7 +124,8 @@ export default function Page(): JSX.Element {
       console.log('balance', result);
       const temp = await updateAllowance(address);
       setApproved(temp);
-      setDisable(!temp);
+      setDisable(false);
+      setLoading(false);
     }
   };
 
@@ -215,10 +220,16 @@ export default function Page(): JSX.Element {
                                 <IconButton
                                   color="warning"
                                   size="large"
-                                  disabled={disabled || tokens.length === 0 || !token}
+                                  disabled={disabled || tokens.length === 0 || !token || loading}
                                   onClick={onSndTransaction}
                                 >
-                                  {approved ? <ArrowForwardIosIcon /> : <LockIcon />}
+                                  {loading ? (
+                                    <CircularProgress />
+                                  ) : approved ? (
+                                    <ArrowForwardIosIcon />
+                                  ) : (
+                                    <LockIcon />
+                                  )}
                                 </IconButton>
                               </InputAdornment>
                             ),
