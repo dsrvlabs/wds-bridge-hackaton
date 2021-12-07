@@ -46,6 +46,7 @@ export default function Page(): JSX.Element {
   const [pair, setPair] = useState<(Account | null)[]>([null, null]);
   const [token, setToken] = useState<Token | null>(null);
   const [value, setValue] = useState<number>(0);
+  const [balance, setBalance] = useState<string>('');
   const [disabled, setDisable] = useState<boolean>(true);
   // const [data, setData] = useState('');
   // console.log('length - ', address);
@@ -68,10 +69,19 @@ export default function Page(): JSX.Element {
   const onSndTransaction = (): void => {
     console.log('----------------------------------');
     console.log('snd');
-    console.log('from', pair[0]);
-    console.log('to', pair[1]);
-    console.log('token', token);
+    console.log('from', JSON.stringify(pair[0]));
+    console.log('to', JSON.stringify(pair[1]));
+    console.log('token', JSON.stringify(token));
     console.log('value', value);
+    console.log('----------------------------------');
+  };
+
+  const updateBalance = ({ name, address }: { name: string; address: string }): void => {
+    console.log('----------------------------------');
+    console.log('get token balance');
+    console.log('network', pair[0]?.network);
+    console.log('name', name);
+    console.log('address', address);
     console.log('----------------------------------');
   };
 
@@ -80,7 +90,6 @@ export default function Page(): JSX.Element {
       layout={Layout}
       connected={connected}
       component={(): JSX.Element => {
-        const balance = 17; // TODO
         return (
           <>
             <Box
@@ -109,6 +118,7 @@ export default function Page(): JSX.Element {
                         if (items[0]) {
                           setToken(null);
                           setTokens(tokenList[items[0].network] || []);
+                          setBalance('');
                         }
                         setPair(items);
                       }}
@@ -144,7 +154,9 @@ export default function Page(): JSX.Element {
                                     name: string;
                                     address: string;
                                   }): void => {
+                                    setBalance('');
                                     setToken(item);
+                                    updateBalance(item);
                                   }}
                                 />
                               </InputAdornment>
@@ -164,7 +176,7 @@ export default function Page(): JSX.Element {
                           }}
                         />
                         <FormHelperText>
-                          {`MAX amount: ${balance} Photon, Tx Fee: 0.04 Photon`}
+                          {balance ? `MAX amount: ${balance} Photon, Tx Fee: 0.04 Photon` : ''}
                         </FormHelperText>
                       </FormControl>
                     </Grid>
