@@ -47,7 +47,8 @@ const ListItems = ({ connected }: ListItemsProps): JSX.Element => {
   const getAccounts = async (network: string): Promise<Account[]> => {
     const { welldone } = window as any;
     if (welldone) {
-      const temp = await welldone.getAccount(network);
+      const accounts = await welldone.getAccount(network);
+      const temp = accounts[0];
       // console.log(network)
       return [{ network: network, address: temp.address }];
     }

@@ -94,9 +94,10 @@ export default function Page(): JSX.Element {
     console.log('name', name);
     console.log('address', address);
     console.log('----------------------------------');
-    if (pair[0] && pair[1] && token) {
-      const result = await Contracts.getBalanceOf(pair[0].network, token.address, pair[0].address);
+    if (pair[0] && pair[1]) {
+      const result = await Contracts.getBalanceOf(pair[0].network, address, pair[0].address);
       setBalance(result);
+      console.log('balance', result);
     }
   };
 
