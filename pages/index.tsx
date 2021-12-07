@@ -42,17 +42,22 @@ export default function Page(): JSX.Element {
   };
   const [tokens, setTokens] = useState<Token[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
-  const [disabled, setDisable] = useState<boolean>(true);
 
   const [pair, setPair] = useState<(Account | null)[]>([null, null]);
   const [token, setToken] = useState<Token | null>(null);
   const [value, setValue] = useState<number>(0);
+  const [disabled, setDisable] = useState<boolean>(true);
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
   const connected = (items: Account[]): void => {
     // layout/Navbar/ListItems에서 실행
     setAccounts(items);
+    setToken(null);
+    setValue(0);
+    setPair([null, null]);
+    setTokens([]);
+
     if (items.length > 0) {
       setDisable(false);
     } else {
