@@ -71,7 +71,8 @@ const ListItems = ({ connected }: ListItemsProps): JSX.Element => {
   const onConnect = async (): Promise<void> => {
     try {
       // console.log('try connect');
-      // const { welldone } = window as any;
+      const { welldone } = window as any;
+      await welldone.connectWallet();
       const a0 = await getAccounts('evmos');
       const a1 = await getAccounts('ethereum');
       const a2 = await getAccounts('cosmos');
