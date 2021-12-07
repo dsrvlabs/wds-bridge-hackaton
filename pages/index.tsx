@@ -17,6 +17,7 @@ import Bridge from '@components/Menu/bridge';
 import MenuToken, { Token } from '@components/Menu/token';
 import { Account } from '@components/Menu/account';
 import History from '@components/History';
+import { Contracts } from '@components/Menu/contracts';
 
 const AmountInput = styled(TextField)(() => {
   return {
@@ -32,14 +33,7 @@ const AmountInput = styled(TextField)(() => {
 export default function Page(): JSX.Element {
   // TODO: dummy data
   // const address = ['0x48q359...E488d19', '0x49q359...E488d19', '0x50q359...E488d19'];
-  const tokenList: { [key: string]: Token[] } = {
-    evmos: [
-      {
-        name: 'test token',
-        address: '',
-      },
-    ],
-  };
+
   const [tokens, setTokens] = useState<Token[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
 
@@ -66,7 +60,7 @@ export default function Page(): JSX.Element {
     }
   };
 
-  const onSndTransaction = (): void => {
+  const onSndTransaction = async (): Promise<void> => {
     console.log('----------------------------------');
     console.log('snd');
     console.log('from', JSON.stringify(pair[0]));
@@ -74,15 +68,35 @@ export default function Page(): JSX.Element {
     console.log('token', JSON.stringify(token));
     console.log('value', value);
     console.log('----------------------------------');
+    if (pair[0] && pair[1] && token) {
+      const result = await Contracts.send(
+        pair[0].network,
+        token.address,
+        value.toString(),
+        pair[1].network,
+        pair[1].address,
+      );
+      console.log(result);
+    }
   };
 
-  const updateBalance = ({ name, address }: { name: string; address: string }): void => {
+  const updateBalance = async ({
+    name,
+    address,
+  }: {
+    name: string;
+    address: string;
+  }): Promise<void> => {
     console.log('----------------------------------');
     console.log('get token balance');
     console.log('network', pair[0]?.network);
     console.log('name', name);
     console.log('address', address);
     console.log('----------------------------------');
+    if (pair[0] && pair[1] && token) {
+      const result = await Contracts.getBalanceOf(pair[0].network, token.address, pair[0].address);
+      setBalance(result);
+    }
   };
 
   return (
@@ -116,10 +130,11 @@ export default function Page(): JSX.Element {
                       pair={pair}
                       updatePair={(items: (Account | null)[]): void => {
                         if (items[0]) {
-                          setToken(null);
-                          setTokens(tokenList[items[0].network] || []);
-                          setBalance('');
+                          setTokens(Contracts.tokenList[items[0].network] || []);
                         }
+                        setToken(null);
+                        setBalance('');
+                        setValue(0);
                         setPair(items);
                       }}
                     />
@@ -133,7 +148,7 @@ export default function Page(): JSX.Element {
                         <AmountInput
                           type="number"
                           style={{ borderRadius: '27px' }}
-                          disabled={disabled || tokens.length === 0}
+                          disabled={disabled || tokens.length === 0 || !token}
                           variant="outlined"
                           value={value}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -155,6 +170,7 @@ export default function Page(): JSX.Element {
                                     address: string;
                                   }): void => {
                                     setBalance('');
+                                    setValue(0);
                                     setToken(item);
                                     updateBalance(item);
                                   }}
@@ -166,7 +182,7 @@ export default function Page(): JSX.Element {
                                 <IconButton
                                   color="warning"
                                   size="large"
-                                  disabled={disabled || tokens.length === 0}
+                                  disabled={disabled || tokens.length === 0 || !token}
                                   onClick={onSndTransaction}
                                 >
                                   <ArrowForwardIosIcon />
