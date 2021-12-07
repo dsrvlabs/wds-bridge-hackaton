@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Box,
   Grid,
@@ -39,9 +39,10 @@ export default function Page(): JSX.Element {
 
   const [pair, setPair] = useState<(Account | null)[]>([null, null]);
   const [token, setToken] = useState<Token | null>(null);
-  const [value, setValue] = useState<number>(0);
   const [balance, setBalance] = useState<string>('');
   const [disabled, setDisable] = useState<boolean>(true);
+
+  const textRef = useRef();
   // const [data, setData] = useState('');
   // console.log('length - ', address);
 
@@ -49,7 +50,7 @@ export default function Page(): JSX.Element {
     // layout/Navbar/ListItems에서 실행
     setAccounts(items);
     setToken(null);
-    setValue(0);
+
     setPair([null, null]);
     setTokens([]);
 
@@ -66,13 +67,13 @@ export default function Page(): JSX.Element {
     console.log('from', JSON.stringify(pair[0]));
     console.log('to', JSON.stringify(pair[1]));
     console.log('token', JSON.stringify(token));
-    console.log('value', value);
+    console.log('value', textRef.current ? (textRef.current as any).value.toString() : '0');
     console.log('----------------------------------');
     if (pair[0] && pair[1] && token) {
       const result = await Contracts.send(
         pair[0].network,
         token.address,
-        value.toString(),
+        textRef.current ? (textRef.current as any).value.toString() : '0',
         pair[1].network,
         pair[1].address,
       );
@@ -134,7 +135,6 @@ export default function Page(): JSX.Element {
                         }
                         setToken(null);
                         setBalance('');
-                        setValue(0);
                         setPair(items);
                       }}
                     />
@@ -150,10 +150,7 @@ export default function Page(): JSX.Element {
                           style={{ borderRadius: '27px' }}
                           disabled={disabled || tokens.length === 0 || !token}
                           variant="outlined"
-                          value={value}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-                            setValue(e.target.value as unknown as number);
-                          }}
+                          inputRef={textRef}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment
@@ -170,7 +167,6 @@ export default function Page(): JSX.Element {
                                     address: string;
                                   }): void => {
                                     setBalance('');
-                                    setValue(0);
                                     setToken(item);
                                     updateBalance(item);
                                   }}
