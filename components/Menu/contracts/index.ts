@@ -9,10 +9,10 @@ export class Contracts {
 
   static ADDRESS = {
     BridgeRouter: {
-      evmos: '', // devnet
+      evmos: '0x9caAeE7159A1c2ae6BD2E368E4709cC9e16660D8', // devnet
       aurora: '', // testnet
       neon: '', // devnet
-      ropsten: '',
+      ropsten: '0xaf7230bc19b3ff4b2b5be6d9a7ad8fd1568e0a68',
     },
   };
 
@@ -41,10 +41,10 @@ export class Contracts {
     ],
   };
 
-  static async getBalanceOf(network: string, _token: string, _who: string): Promise<string> {
+  static getRPC(_network: string): string {
     let rpc = '';
 
-    switch (network) {
+    switch (_network) {
       case 'evmos':
         rpc = 'https://ethereum.rpc.evmos.dev';
         break;
@@ -61,47 +61,13 @@ export class Contracts {
         break;
     }
 
-    const ethers = Contracts.getEthers();
-
-    if (ethers && _token && rpc) {
-      const provider = new ethers.providers.JsonRpcProvider(rpc);
-      const erc20 = new ethers.Contract(_token, ERC20, provider);
-      const balance = await erc20.callStatic.balanceOf(_who);
-      return ethers.utils.formatEther(balance); // TODO: temp decimal
-    }
-    return '';
+    return rpc;
   }
 
-  static makeData(
-    _token: string,
-    _amount: string,
-    _destination: string,
-    _recipient: string,
-  ): string {
-    const ethers = Contracts.getEthers();
-    if (ethers) {
-      const iface = new ethers.utils.Interface(BridgeRouter);
-      const data = iface.encodeFunctionData('send', [
-        _token,
-        ethers.utils.parseEther(_amount),
-        _destination,
-        _recipient,
-      ]);
-      return data;
-    }
-    return '';
-  }
-
-  static async send(
-    network: string,
-    _token: string,
-    _amount: string,
-    _destination: string,
-    _recipient: string,
-  ): Promise<string> {
+  static getBridgeRouter(_network: string): string {
     let to = '';
 
-    switch (network) {
+    switch (_network) {
       case 'evmos':
         to = Contracts.ADDRESS.BridgeRouter.evmos;
         break;
@@ -118,11 +84,129 @@ export class Contracts {
         break;
     }
 
+    return to;
+  }
+
+  static getDestination(_destination: string): string {
+    let destination = '';
+
+    switch (_destination) {
+      case 'evmos':
+        destination = '0x075bcd15';
+        break;
+      case 'ethereum':
+        destination = '0x0d51ae15';
+        break;
+      case 'aurora':
+        break;
+      case 'neon':
+        break;
+      default:
+        break;
+    }
+
+    return destination;
+  }
+
+  static async getBalanceOf(network: string, _token: string, _who: string): Promise<string> {
+    const rpc = Contracts.getRPC(network);
+    const ethers = Contracts.getEthers();
+
+    if (ethers && _token && rpc) {
+      const provider = new ethers.providers.JsonRpcProvider(rpc);
+      const erc20 = new ethers.Contract(_token, ERC20, provider);
+      const balance = await erc20.callStatic.balanceOf(_who);
+      return ethers.utils.formatEther(balance); // TODO: temp decimal
+    }
+    return '';
+  }
+
+  static async getAllowance(
+    network: string,
+    _token: string,
+    _owner: string,
+    limit: string,
+  ): Promise<boolean> {
+    const rpc = Contracts.getRPC(network);
+    const ethers = Contracts.getEthers();
+    const spender = Contracts.getBridgeRouter(network);
+
+    if (ethers && _token && rpc) {
+      const provider = new ethers.providers.JsonRpcProvider(rpc);
+      const erc20 = new ethers.Contract(_token, ERC20, provider);
+      const ammount = await erc20.callStatic.allowance(_owner, spender);
+      return ethers.BigNumber.from(limit).lt(ammount);
+    }
+    return false;
+  }
+
+  static approveData(_spender: string, _amount: string): string {
+    const ethers = Contracts.getEthers();
+    if (ethers) {
+      const iface = new ethers.utils.Interface(ERC20);
+      const data = iface.encodeFunctionData('approve', [
+        _spender,
+        ethers.utils.parseEther(_amount),
+      ]);
+      return data;
+    }
+    return '';
+  }
+
+  static sendData(
+    _token: string,
+    _amount: string,
+    _destination: string,
+    _recipient: string,
+  ): string {
+    const ethers = Contracts.getEthers();
+    if (ethers) {
+      const iface = new ethers.utils.Interface(BridgeRouter);
+      const data = iface.encodeFunctionData('send', [
+        _token,
+        ethers.utils.parseEther(_amount),
+        _destination,
+        _recipient,
+      ]);
+
+      console.log('_amount', _amount, ethers.utils.parseEther(_amount).toString());
+      console.log('_token', _token);
+      console.log('_destination', _destination);
+      console.log('_recipient', _recipient);
+      console.log('data', data);
+
+      return data;
+    }
+    return '';
+  }
+
+  static async approve(network: string, _token: string, _amount: string): Promise<string> {
+    const welldone = Contracts.getWelldoneWallet();
+    const spender = Contracts.getBridgeRouter(network);
+    const hash = await welldone.sendTransaction(
+      network,
+      Contracts.approveData(spender, _amount),
+      _token,
+    );
+    console.log(hash);
+    return hash;
+  }
+
+  static async send(
+    network: string,
+    _token: string,
+    _amount: string,
+    _destination: string,
+    _recipient: string,
+  ): Promise<string> {
+    const to = Contracts.getBridgeRouter(network);
+    const destination = Contracts.getDestination(_destination);
+
     if (to) {
       const welldone = Contracts.getWelldoneWallet();
       const hash = await welldone.sendTransaction(
         network,
-        Contracts.makeData(_token, _amount, _destination, _recipient),
+        Contracts.sendData(_token, _amount, destination, _recipient),
         to,
       );
       console.log(hash);

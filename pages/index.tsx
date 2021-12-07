@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import LockIcon from '@mui/icons-material/Lock';
 import Layout from '@layout/index';
 import AppLayout from '@components/AppLayout';
 import Section from '@components/Section';
@@ -41,6 +42,7 @@ export default function Page(): JSX.Element {
   const [token, setToken] = useState<Token | null>(null);
   const [balance, setBalance] = useState<string>('');
   const [disabled, setDisable] = useState<boolean>(true);
+  const [approved, setApproved] = useState<boolean>(false);
 
   const textRef = useRef();
   // const [data, setData] = useState('');
@@ -62,22 +64,38 @@ export default function Page(): JSX.Element {
   };
 
   const onSndTransaction = async (): Promise<void> => {
-    console.log('----------------------------------');
-    console.log('snd');
-    console.log('from', JSON.stringify(pair[0]));
-    console.log('to', JSON.stringify(pair[1]));
-    console.log('token', JSON.stringify(token));
-    console.log('value', textRef.current ? (textRef.current as any).value.toString() : '0');
-    console.log('----------------------------------');
-    if (pair[0] && pair[1] && token) {
-      const result = await Contracts.send(
-        pair[0].network,
-        token.address,
-        textRef.current ? (textRef.current as any).value.toString() : '0',
-        pair[1].network,
-        pair[1].address,
-      );
-      console.log(result);
+    if (approved) {
+      console.log('----------------------------------');
+      console.log('snd');
+      console.log('from', JSON.stringify(pair[0]));
+      console.log('to', JSON.stringify(pair[1]));
+      console.log('token', JSON.stringify(token));
+      console.log('value', textRef.current ? (textRef.current as any).value.toString() : '0');
+      console.log('----------------------------------');
+      if (pair[0] && pair[1] && token) {
+        console.log('send');
+        const result = await Contracts.send(
+          pair[0].network,
+          token.address,
+          textRef.current ? (textRef.current as any).value.toString() : '0',
+          pair[1].network,
+          pair[1].address.replace('0x', '0x000000000000000000000000'),
+        );
+        console.log(result);
+      }
+    } else {
+      console.log('----------------------------------');
+      console.log('approve');
+      console.log('from', JSON.stringify(pair[0]));
+      console.log('token', JSON.stringify(token));
+      console.log('----------------------------------');
+      if (pair[0] && token) {
+        console.log('approve');
+        const result = await Contracts.approve(pair[0].network, token.address, '10000000000');
+        console.log(result);
+        const temp = await updateAllowance(token.address);
+        setApproved(temp);
+      }
     }
   };
 
@@ -94,11 +112,29 @@ export default function Page(): JSX.Element {
     console.log('name', name);
     console.log('address', address);
     console.log('----------------------------------');
-    if (pair[0] && pair[1]) {
+    if (pair[0]) {
+      setDisable(true);
+      setApproved(false);
       const result = await Contracts.getBalanceOf(pair[0].network, address, pair[0].address);
       setBalance(result);
       console.log('balance', result);
+      const temp = await updateAllowance(address);
+      setApproved(temp);
+      setDisable(!temp);
     }
+  };
+
+  const updateAllowance = async (address: string): Promise<boolean> => {
+    if (pair[0]) {
+      const result = await Contracts.getAllowance(
+        pair[0].network,
+        address,
+        pair[0].address,
+        '100000000',
+      );
+      return result;
+    }
+    return false;
   };
 
   return (
@@ -182,7 +218,7 @@ export default function Page(): JSX.Element {
                                   disabled={disabled || tokens.length === 0 || !token}
                                   onClick={onSndTransaction}
                                 >
-                                  <ArrowForwardIosIcon />
+                                  {approved ? <ArrowForwardIosIcon /> : <LockIcon />}
                                 </IconButton>
                               </InputAdornment>
                             ),
