@@ -29,8 +29,14 @@ export class Contracts {
   static tokenList: { [key: string]: Token[] } = {
     evmos: [
       {
-        name: 'test token',
-        address: '',
+        name: 'TKN-evmos',
+        address: '0x85d2876C370F91D9a541dcca24B7932b4E793D7E',
+      },
+    ],
+    ethereum: [
+      {
+        name: 'TKN-ropsten',
+        address: '0x85d2876C370F91D9a541dcca24B7932b4E793D7E',
       },
     ],
   };
@@ -42,7 +48,7 @@ export class Contracts {
       case 'evmos':
         rpc = 'https://ethereum.rpc.evmos.dev';
         break;
-      case 'ropsten':
+      case 'ethereum':
         rpc = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
         break;
       case 'aurora':
@@ -99,7 +105,7 @@ export class Contracts {
       case 'evmos':
         to = Contracts.ADDRESS.BridgeRouter.evmos;
         break;
-      case 'ropsten':
+      case 'ethereum':
         to = Contracts.ADDRESS.BridgeRouter.ropsten;
         break;
       case 'aurora':
@@ -116,9 +122,8 @@ export class Contracts {
       const welldone = Contracts.getWelldoneWallet();
       const hash = await welldone.sendTransaction(
         network,
-        to,
         Contracts.makeData(_token, _amount, _destination, _recipient),
-        '0',
+        to,
       );
       console.log(hash);
       return hash;
