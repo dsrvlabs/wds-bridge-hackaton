@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gcp-predeploy": "find ./.next -name '\\[...*' -exec bash -c 'mv \"$1\" \"${1/.../@@@}\"' -- {} \\;",
+    "gcp-build": "find ./.next -name '\\[@@@*' -exec bash -c 'mv \"$1\" \"${1/@@@/...}\"' -- {} \\;",
+    "deploy": "rm -rf ./.next && NODE_ENV=production next build && npm run gcp-predeploy && gcloud app deploy"  
   },
   "dependencies": {
     "@emotion/cache": "^11.4.0",
