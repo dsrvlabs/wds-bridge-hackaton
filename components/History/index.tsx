@@ -72,32 +72,7 @@ export default function History(): JSX.Element {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // TODO: dummy data
-  const stakes = [
-    {
-      time: '2021.11.24',
-      from: 'ethereum',
-      to: 'celo',
-      amount: 24,
-    },
-    {
-      time: '2021.11.22',
-      from: 'celo',
-      to: 'ethereum',
-      amount: 10.0428,
-    },
-    {
-      time: '2021.11.21',
-      from: 'ethereum',
-      to: 'celo',
-      amount: 10.0428,
-    },
-    {
-      time: '2021.10.30',
-      from: 'ethereum',
-      to: 'celo',
-      amount: 10.0428,
-    },
-  ];
+  const stakes: Data[] = [];
 
   const getRows = (): Data[] => {
     const data: Data[] = [];
