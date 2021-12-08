@@ -12,7 +12,7 @@ export class Contracts {
       evmos: '0x9caAeE7159A1c2ae6BD2E368E4709cC9e16660D8', // devnet
       aurora: '', // testnet
       neon: '', // devnet
-      ropsten: '0xaf7230bc19b3ff4b2b5be6d9a7ad8fd1568e0a68',
+      ropsten: '0x077144b6c615FCdd03694Bc5977dB3c016278fA9',
     },
   };
 
