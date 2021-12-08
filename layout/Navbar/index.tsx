@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Account } from '@components/Menu/account';
 import ListItems from './ListItems';
+import LogoImage from '../../public/logo.png';
 
 const FlexGrow = styled(Box)(() => {
   return {
@@ -31,7 +32,7 @@ const Navbar = ({ connected }: NavbarProps): JSX.Element => {
       <StyledToolbar>
         <Link href="/">
           <a>
-            <Typography variant="h5">WELLDONE Bridge</Typography>
+            <img width="120px" style={{ marginTop: '6px' }} src="/logo.png" />
           </a>
         </Link>
         <FlexGrow />
