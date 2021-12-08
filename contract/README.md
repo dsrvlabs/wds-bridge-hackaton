@@ -1,0 +1,1 @@
+A smart contract is a fork of [optics](https://github.com/celo-org/optics-monorepo/tree/main/solidity).
