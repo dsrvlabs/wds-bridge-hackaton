@@ -1,3 +1,5 @@
 dispatch:
-  - url: "bridge.welldonestake.io/*"
+  - url: 'dev.welldonestake.io/*'
+    service: dev
+  - url: 'bridge.welldonestake.io/*'
     service: bridge
