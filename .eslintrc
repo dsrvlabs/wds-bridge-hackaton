@@ -7,7 +7,6 @@
     "next/core-web-vitals",
     "next",
     "prettier",
-    "plugin:@next/next/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
@@ -16,14 +15,8 @@
   "rules": {
     "no-console": "off",
     "prettier/prettier": "error",
-    "arrow-body-style": [
-      "error",
-      "always"
-    ],
-    "func-style": [
-      "error",
-      "expression"
-    ],
+    "arrow-body-style": ["error", "always"],
+    "func-style": ["error", "expression"],
     "react/display-name": "off",
     "prefer-arrow-callback": "error",
     "react/react-in-jsx-scope": "off",
