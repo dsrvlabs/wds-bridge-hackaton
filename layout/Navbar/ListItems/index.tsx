@@ -76,8 +76,8 @@ const ListItems = ({ connected }: ListItemsProps): JSX.Element => {
       await welldone.connectWallet();
       const a0 = await getAccounts('evmos');
       const a1 = await getAccounts('ethereum');
-      const a2 = await getAccounts('cosmos');
-      const addressAll = [...a0, ...a1, ...a2];
+
+      const addressAll = [...a0, ...a1];
 
       setAddress(addressAll);
       if (addressAll.length > 0) {
