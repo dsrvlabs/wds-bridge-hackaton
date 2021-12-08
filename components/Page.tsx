@@ -9,21 +9,13 @@ interface Props {
 }
 
 export const useDarkMode = (): [string, () => void, boolean] => {
-  const [themeMode, setTheme] = useState('light');
+  const [themeMode, setTheme] = useState('dark');
   const [mountedComponent, setMountedComponent] = useState(false);
 
-  const setMode = (mode: string): void => {
-    window.localStorage.setItem('themeMode', mode);
-    setTheme(mode);
-  };
-
-  const themeToggler = (): void => {
-    themeMode === 'light' ? setMode('dark') : setMode('light');
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const themeToggler = (): void => {};
 
   useEffect(() => {
-    const localTheme = window.localStorage.getItem('themeMode');
-    localTheme ? setTheme(localTheme) : setMode('light');
     setMountedComponent(true);
   }, []);
 

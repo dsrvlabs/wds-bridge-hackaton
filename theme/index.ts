@@ -33,7 +33,7 @@ const getTheme = (mode: string, themeToggler: () => void): Theme => {
             label: {
               fontWeight: 600,
             },
-            containedSecondary: mode === 'light' ? { color: 'white' } : {},
+            containedSecondary: mode === 'light' ? { color: 'white' } : { color: 'black' },
           } as ComponentsOverrides['MuiButton'],
         },
       },
