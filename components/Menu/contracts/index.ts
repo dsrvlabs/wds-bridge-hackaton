@@ -9,10 +9,10 @@ export class Contracts {
 
   static ADDRESS = {
     BridgeRouter: {
-      evmos: '0x9caAeE7159A1c2ae6BD2E368E4709cC9e16660D8', // devnet
+      evmos: '0x0F139Ffbc1E5C02b0198E82FC3a250E41CEE0a43', // devnet
       aurora: '', // testnet
       neon: '', // devnet
-      ropsten: '0x077144b6c615FCdd03694Bc5977dB3c016278fA9',
+      ropsten: '0x25c9D0c15b90A12e9f388dFe5706b20F233BBe8a',
     },
   };
 
