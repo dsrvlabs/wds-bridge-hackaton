@@ -16,7 +16,7 @@ While the Cosmos interchain ecosystem is growing rapidly, we felt there was stil
 ## What's next for WELLDONE Wallet & Bridge
 
 We created WELLDONE Wallet & Bridge with three core objectives in mind. Creating a one-of-a-kind wallet for multi-chain assets, providing better infrastructure to lower barriers for developers, and developing a cross-chain bridge.
-By developing a one-of-a-kind wallet for multi-chain assets (KMS), we optimize your user experience. 
+By developing a one-of-a-kind wallet for multi-chain assets ([KMS](https://www.npmjs.com/package/@dsrv/kms)), we optimize your user experience. 
 By building solid infrastructure (Universal Provider), we lower the barriers to entry for developers, so that more players can contribute to the ecosystem.
 Finally, by developing a cross-chain bridge, we can enable users to easily switch chains via their WELLDONE wallets. Rather than simply providing access to all assets in one wallet, we want to enable users to go seamlessly between various chains. So next up is our bridge! 
 
