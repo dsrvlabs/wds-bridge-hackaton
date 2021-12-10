@@ -22,3 +22,7 @@ Finally, by developing a cross-chain bridge, we can enable users to easily switc
 
 
 Join us, and together let’s bring your finest ideas to life.
+
+
+## Languages & Frameworks
+Javascript(Typescript), React, Rust, Python, Solidity, Ether.js, Cosmos SDK, Coingecko API 
