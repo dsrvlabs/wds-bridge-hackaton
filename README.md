@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WELLDONE Wallet & Bridge
 
-## Getting Started
 
-First, run the development server:
+## Introduction
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Meet WELLDONE Bridge. Over the past month, we have developed a multi-purpose blockchain infrastructure wallet and bridge with a user-friendly interface. The result is an app that supports Cosmos, Ethereum, and EVMOS. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You can access the WELLDONE bridge through the beta page. And you can download and use our Multi-chain Wallet through the Chrome web store. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Inspiration
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+While the Cosmos interchain ecosystem is growing rapidly, we felt there was still a notable lack of user-oriented infrastructure– this was our main motive for building our own wallet. As wallet compatibility varies by blockchain, users have to create numerous wallets to access different networks. Consequently, users can end up having to juggle a host of addresses and private keys. Developers also have to download, develop and test all the wallets they use.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## What's next for WELLDONE Wallet & Bridge
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+We created WELLDONE Wallet & Bridge with three core objectives in mind. Creating a one-of-a-kind wallet for multi-chain assets, providing better infrastructure to lower barriers for developers, and developing a cross-chain bridge.
+By developing a one-of-a-kind wallet for multi-chain assets (KMS), we optimize your user experience. 
+By building solid infrastructure (Universal Provider), we lower the barriers to entry for developers, so that more players can contribute to the ecosystem.
+Finally, by developing a cross-chain bridge, we can enable users to easily switch chains via their WELLDONE wallets. Rather than simply providing access to all assets in one wallet, we want to enable users to go seamlessly between various chains. So next up is our bridge! 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Join us, and together let’s bring your finest ideas to life.
