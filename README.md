@@ -5,7 +5,7 @@
 
 Meet WELLDONE Bridge. Over the past month, we have developed a multi-purpose blockchain infrastructure wallet and bridge with a user-friendly interface. The result is an app that supports Cosmos, Ethereum, and EVMOS. 
 
-You can access the WELLDONE bridge through ([the beta page](https://bridge.welldonestake.io/)). And you can download and use our ([Multi-chain Wallet](https://chrome.google.com/webstore/detail/welldonestake-wallet/bmkakpenjmcpfhhjadflneinmhboecjf?hl=ko)) through the Chrome web store. 
+You can access the WELLDONE bridge through [the beta page](https://bridge.welldonestake.io/). And you can download and use our [Multi-chain Wallet](https://chrome.google.com/webstore/detail/welldonestake-wallet/bmkakpenjmcpfhhjadflneinmhboecjf?hl=ko) through the Chrome web store. 
 
 
 ## Inspiration
